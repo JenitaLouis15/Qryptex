@@ -131,7 +131,7 @@ const CAPABILITIES = [
 // ── TEAM DATA ────────────────────────────────────────────────────────────────
 const ENGINEERS = [
   {
-    name: "Suresh Krishna",
+    name: "Person 1",
     role: "Lead Systems Architect & Quantum Engineer",
     bio: "Drives the vision for deeply scalable architecture and post-quantum cryptography. Specializes in building deterministic consensus engines, full-stack observability platforms, and integrating AI into enterprise data flows.",
     github: "https://github.com/SureshKrishnaR", 
@@ -140,7 +140,7 @@ const ENGINEERS = [
     accentRgb: "167,139,250"
   },
   {
-    name: "Sai Shashank",
+    name: "Person 2",
     role: "Lead Cybersecurity & Blockchain Engineer",
     bio: "Focuses on perimeter hardening, adversarial simulation, and decentralized infrastructure. Architect of hybrid AI risk models, secure payment pipelines, and deep-dive vulnerability exploitation frameworks.",
     github: "https://github.com/sai-shashank-2005",
