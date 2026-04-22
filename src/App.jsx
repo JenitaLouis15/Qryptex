@@ -4,23 +4,26 @@ import Hero from "./components/Hero";
 import Services from "./components/Services";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import Cybersec from "./pages/Cybersec"; // Your new page import
 
 function App() {
   return (
     <Router>
       <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#05030D" }}>
         <Routes>
-          {/* This renders your Hero component when on the Home page */}
+          {/* Home Route */}
           <Route path="/" element={<Hero />} />
           
-          {/* This renders your Services component */}
+          {/* Main Navigation Routes */}
           <Route path="/services" element={<Services />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          {/* Catch-all: Redirects any unknown paths (like /blockchain) back to Home */}
-          <Route path="*" element={<Hero />} />
           
+          {/* Service Details Routes */}
+          <Route path="/cybersec" element={<Cybersec />} />
 
+          {/* Catch-all: Redirects any unknown paths back to Home */}
+          <Route path="*" element={<Hero />} />
         </Routes>
         
         <Footer />
