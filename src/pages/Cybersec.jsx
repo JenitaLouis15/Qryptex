@@ -272,13 +272,13 @@ export default function Cybersec() {
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-deep, #05030D)", position: "relative", overflowX: "hidden", color: "var(--text-primary, #E9E6FF)" }}>
       
-      {/* Dynamic Scoped CSS for Animations, Responsiveness, and Scrollbar */}
+      {/* Dynamic Scoped CSS for Animations, Responsiveness, and Ultra-Slim Scrollbar */}
       <style>{`
-        /* ── Purple Scrollbar ── */
-        html { scrollbar-color: #6C2BD9 var(--bg-deep, #05030D); scrollbar-width: thin; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-deep, #05030D); }
-        ::-webkit-scrollbar-thumb { background: #6C2BD9; border-radius: 3px; }
+        /* ── Ultra-Slim Purple Scrollbar ── */
+        html { scrollbar-color: rgba(108,43,217,0.8) transparent; scrollbar-width: thin; }
+        ::-webkit-scrollbar { width: 2px; } /* Razor thin */
+        ::-webkit-scrollbar-track { background: transparent; } /* Transparent track removes bulk */
+        ::-webkit-scrollbar-thumb { background: rgba(108,43,217,0.8); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
 
         /* ── Grid & Card Styles ── */
