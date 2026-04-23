@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom"; // <-- Added React Router hook
 
+// Updated Navigation Links
 const NAV_LINKS = [
-  { label: "Home",   href: "/hero"   },
-  { label: "Services",   href: "/services"   },
-  { label: "About Us",      href: "/about"      },
-  { label: "Contact",    href: "/contact"    },
+  { label: "Home",       href: "/#hero"      }, // Hash link for scrolling
+  { label: "Services",   href: "/#services"  }, // Hash link for scrolling
+  { label: "About Us",   href: "/about"      }, // Separate route
+  { label: "Contact",    href: "/contact"    }, // Separate route
 ];
 
 const SERVICES = [
@@ -18,6 +20,7 @@ const SERVICES = [
         <path d="M12 18l4.5 4.5L24 13" stroke="#00FFC6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
+    
     title: "Cybersecurity",
     subtitle: "Solutions",
     tagline: "Threat architecture designed to outpace adversaries — not just detect them.",
@@ -383,6 +386,7 @@ function ServiceCard({ svc, index }) {
   const [hov, setHov] = useState(false);
   const [vis, setVis] = useState(false);
   const ref = useRef(null);
+  const navigate = useNavigate(); // <-- Initialized Router hook
 
   useEffect(() => {
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVis(true); io.disconnect(); } }, { threshold: 0.1 });
@@ -395,7 +399,7 @@ function ServiceCard({ svc, index }) {
       ref={ref}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
-      onClick={() => window.location.href = `/${svc.id}`}
+      onClick={() => navigate(`/${svc.id}`)} // <-- Changed to use React Router navigation
       style={{
         position: "relative", cursor: "pointer", borderRadius: 4,
         border: `1px solid ${hov ? `rgba(${svc.accentRgb},0.48)` : "rgba(108,43,217,0.17)"}`,
@@ -439,11 +443,13 @@ function ServiceCard({ svc, index }) {
 
 function CustomCell() {
   const [hov, setHov] = useState(false);
+  const navigate = useNavigate(); // <-- Initialized Router hook
+
   return (
     <div
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
-      onClick={() => window.location.href = "/contact"}
+      onClick={() => navigate("/contact")} // <-- Changed to use React Router navigation
       style={{
         padding: "36px 30px", borderRadius: 4,
         border: `1px dashed ${hov ? "rgba(108,43,217,0.45)" : "rgba(108,43,217,0.16)"}`,
