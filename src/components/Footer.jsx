@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -146,10 +147,15 @@ export default function Footer() {
             © {currentYear} QRYPTEX // ALL_RIGHTS_RESERVED
           </div>
           
-          <div style={{ display: "flex", gap: "24px" }}>
-            <span className="footer-legal-link">Privacy_Policy</span>
-            <span className="footer-legal-link">Terms_Of_Service</span>
-          </div>
+         <div style={{ display: "flex", gap: "24px" }}>
+  <Link to="/privacy" className="footer-legal-link">
+    Privacy_Policy
+  </Link>
+
+  <Link to="/terms" className="footer-legal-link">
+    Terms_Of_Service
+  </Link>
+</div>
         </div>
       </footer>
     </>

@@ -5,8 +5,9 @@ import Services from "./components/Services";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Cybersec from "./pages/Cybersec";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
-// 1. Landing page now only stacks Hero and Services for scrolling
 function LandingPage() {
   return (
     <main>
@@ -21,17 +22,17 @@ function App() {
     <Router>
       <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#05030D" }}>
         <Routes>
-          {/* Main Landing Page */}
           <Route path="/" element={<LandingPage />} />
-          
-          {/* Dedicated Pages (No longer stacked on the home page) */}
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          
-          {/* Service Details Routes */}
           <Route path="/cybersec" element={<Cybersec />} />
+          
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          {/* Legal Routes - Placed before catch-all */}
+          
 
-          {/* Catch-all */}
+          {/* Catch-all: Always keep this last */}
           <Route path="*" element={<LandingPage />} />
         </Routes>
         
