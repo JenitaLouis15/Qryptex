@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; // <-- Added React Router hook
+import { useNavigate } from "react-router-dom"; 
 
 // Updated Navigation Links
 const NAV_LINKS = [
-  { label: "Home",       href: "/#hero"      }, // Hash link for scrolling
-  { label: "Services",   href: "/#services"  }, // Hash link for scrolling
-  { label: "About Us",   href: "/about"      }, // Separate route
-  { label: "Contact",    href: "/contact"    }, // Separate route
+  { label: "Home",       href: "/#hero"      }, 
+  { label: "Services",   href: "/#services"  }, 
+  { label: "About Us",   href: "/about"      }, 
+  { label: "Contact",    href: "/contact"    }, 
 ];
 
 const SERVICES = [
@@ -254,7 +254,6 @@ function AmbientCanvas() {
   return <canvas ref={ref} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} />;
 }
 
-// ── NEW: White floating particles layer ──────────────────────────────────────
 function WhiteParticles() {
   const ref = useRef(null);
   useEffect(() => {
@@ -262,83 +261,44 @@ function WhiteParticles() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     let raf;
-
-    const resize = () => {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    const resize = () => { canvas.width  = window.innerWidth; canvas.height = window.innerHeight; };
     resize();
     window.addEventListener("resize", resize);
 
-    // Initialise ~110 particles spread across the full canvas
     const COUNT = 110;
     const particles = Array.from({ length: COUNT }, () => ({
-      x:     Math.random() * canvas.width,
-      y:     Math.random() * canvas.height,
-      r:     Math.random() * 1.4 + 0.3,          // radius 0.3 – 1.7 px
-      vx:    (Math.random() - 0.5) * 0.18,        // gentle horizontal drift
-      vy:    -(Math.random() * 0.22 + 0.06),      // slow upward float
-      alpha: Math.random() * 0.45 + 0.08,         // base opacity
-      flicker: Math.random() * Math.PI * 2,       // phase offset for twinkle
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.3, vx: (Math.random() - 0.5) * 0.18,
+      vy: -(Math.random() * 0.22 + 0.06), alpha: Math.random() * 0.45 + 0.08,
+      flicker: Math.random() * Math.PI * 2,
     }));
 
     const draw = () => {
-      const W = canvas.width;
-      const H = canvas.height;
+      const W = canvas.width, H = canvas.height;
       ctx.clearRect(0, 0, W, H);
-
       const now = performance.now() * 0.001;
 
       particles.forEach((p) => {
-        // drift
-        p.x += p.vx;
-        p.y += p.vy;
-
-        // wrap around edges
-        if (p.x < -2)  p.x = W + 2;
-        if (p.x > W + 2) p.x = -2;
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < -2)  p.x = W + 2; if (p.x > W + 2) p.x = -2;
         if (p.y < -2)  { p.y = H + 2; p.x = Math.random() * W; }
-
-        // gentle twinkle
-        const twinkle = (Math.sin(now * 1.1 + p.flicker) + 1) / 2; // 0 – 1
+        const twinkle = (Math.sin(now * 1.1 + p.flicker) + 1) / 2;
         const a = p.alpha * (0.55 + twinkle * 0.45);
 
         ctx.globalAlpha = a;
         ctx.fillStyle = "#ffffff";
         ctx.shadowBlur = p.r > 1.1 ? 4 : 0;
         ctx.shadowColor = "rgba(255,255,255,0.6)";
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
       });
-
-      ctx.globalAlpha = 1;
-      ctx.shadowBlur  = 0;
+      ctx.globalAlpha = 1; ctx.shadowBlur  = 0;
       raf = requestAnimationFrame(draw);
     };
     draw();
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
   }, []);
-
-  return (
-    <canvas
-      ref={ref}
-      style={{
-        position: "fixed",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        pointerEvents: "none",
-        zIndex: 0,
-      }}
-    />
-  );
+  return <canvas ref={ref} style={{ position: "fixed", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }} />;
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
 function CardParticles({ accent, active }) {
   const ref = useRef(null);
@@ -355,10 +315,8 @@ function CardParticles({ accent, active }) {
 
     const spawn = () => ({
       x: Math.random() * W, y: H + 4,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: -(Math.random() * 0.9 + 0.35),
-      life: 1, decay: Math.random() * 0.009 + 0.004,
-      r: Math.random() * 1.5 + 0.5,
+      vx: (Math.random() - 0.5) * 0.5, vy: -(Math.random() * 0.9 + 0.35),
+      life: 1, decay: Math.random() * 0.009 + 0.004, r: Math.random() * 1.5 + 0.5,
     });
 
     const loop = () => {
@@ -367,8 +325,7 @@ function CardParticles({ accent, active }) {
       pts.current = pts.current.filter(p => p.life > 0);
       pts.current.forEach(p => {
         p.x += p.vx; p.y += p.vy; p.life -= p.decay;
-        ctx.globalAlpha = p.life * 0.65;
-        ctx.fillStyle = accent;
+        ctx.globalAlpha = p.life * 0.65; ctx.fillStyle = accent;
         ctx.shadowBlur = 5; ctx.shadowColor = accent;
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
       });
@@ -378,7 +335,6 @@ function CardParticles({ accent, active }) {
     loop();
     return () => cancelAnimationFrame(raf.current);
   }, [active, accent]);
-
   return <canvas ref={ref} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", borderRadius: 4 }} />;
 }
 
@@ -386,7 +342,7 @@ function ServiceCard({ svc, index }) {
   const [hov, setHov] = useState(false);
   const [vis, setVis] = useState(false);
   const ref = useRef(null);
-  const navigate = useNavigate(); // <-- Initialized Router hook
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVis(true); io.disconnect(); } }, { threshold: 0.1 });
@@ -399,7 +355,7 @@ function ServiceCard({ svc, index }) {
       ref={ref}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
-      onClick={() => navigate(`/${svc.id}`)} // <-- Changed to use React Router navigation
+      onClick={() => navigate(`/${svc.id}`)}
       style={{
         position: "relative", cursor: "pointer", borderRadius: 4,
         border: `1px solid ${hov ? `rgba(${svc.accentRgb},0.48)` : "rgba(108,43,217,0.17)"}`,
@@ -443,13 +399,13 @@ function ServiceCard({ svc, index }) {
 
 function CustomCell() {
   const [hov, setHov] = useState(false);
-  const navigate = useNavigate(); // <-- Initialized Router hook
+  const navigate = useNavigate(); 
 
   return (
     <div
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
-      onClick={() => navigate("/contact")} // <-- Changed to use React Router navigation
+      onClick={() => navigate("/contact")}
       style={{
         padding: "36px 30px", borderRadius: 4,
         border: `1px dashed ${hov ? "rgba(108,43,217,0.45)" : "rgba(108,43,217,0.16)"}`,
@@ -468,9 +424,12 @@ function CustomCell() {
   );
 }
 
+// ── UPGRADED PAGE HEADER (Marketing Focus) ───────────────────────────────────
 function PageHeader() {
   const [vis, setVis] = useState(false);
   const ref = useRef(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold: 0.15 });
     if (ref.current) io.observe(ref.current);
@@ -478,19 +437,63 @@ function PageHeader() {
   }, []);
 
   return (
-    <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", padding: "90px 5% 64px", position: "relative", zIndex: 2 }}>
-      <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "5px 14px", borderRadius: 2, border: "1px solid rgba(0,255,198,0.2)", background: "rgba(0,255,198,0.03)", marginBottom: 24, opacity: vis ? 1 : 0, animation: vis ? "fadeIn 0.5s ease both" : "none" }}>
-        <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--accent-green)", boxShadow: "0 0 6px var(--accent-green)", animation: "blip 2s infinite" }} />
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.16em", color: "var(--accent-green)" }}>FULL STACK · DEEP TECH · QRYPTEX</span>
+    <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", padding: "120px 5% 80px", position: "relative", zIndex: 2 }}>
+      
+      {/* Subtle Glow Behind Header */}
+      <div style={{ position: "absolute", top: "10%", left: "10%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(0,255,198,0.06) 0%, transparent 70%)", filter: "blur(50px)", zIndex: -1, pointerEvents: "none" }} />
+
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "6px 16px", borderRadius: 2, border: "1px solid rgba(0,255,198,0.2)", background: "rgba(0,255,198,0.04)", marginBottom: 30, opacity: vis ? 1 : 0, animation: vis ? "fadeIn 0.5s ease both" : "none" }}>
+        <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent-green)", boxShadow: "0 0 8px var(--accent-green)", animation: "blip 2s infinite" }} />
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.2em", color: "var(--accent-green)", fontWeight: 700 }}>INFRASTRUCTURE AS A COMPETITIVE ADVANTAGE</span>
       </div>
-      <h1 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(32px, 5.5vw, 78px)", fontWeight: 900, lineHeight: 1.0, color: "var(--text-primary)", letterSpacing: "-0.01em", marginBottom: 8, opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.08s both" : "none" }}>WHAT WE</h1>
-      <h1 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(32px, 5.5vw, 78px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.01em", marginBottom: 28, background: "linear-gradient(90deg, #6C2BD9 0%, #A78BFA 45%, #00FFC6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.16s both" : "none" }}>BUILD</h1>
-      <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "clamp(13px, 1.5vw, 15.5px)", lineHeight: 1.75, color: "var(--text-secondary)", maxWidth: 540, marginBottom: 48, opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.24s both" : "none" }}>Five interlocking disciplines. One integrated team. We build the infrastructure that tomorrow's enterprises trust their most critical operations to.</p>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 0, opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.32s both" : "none" }}>
-        {[["5", "Core Disciplines"], ["256-bit", "Quantum-Safe Keys"], ["99.99%", "Uptime SLA"], ["3-in-1", "Full Coverage"]].map(([n, l], i) => (
-          <div key={l} style={{ padding: "14px 20px", borderLeft: "1px solid rgba(108,43,217,0.3)", borderRight: i === 3 ? "1px solid rgba(108,43,217,0.3)" : "none", background: "rgba(108,43,217,0.04)" }}>
-            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(14px, 1.8vw, 19px)", fontWeight: 700, color: "var(--accent-green)", marginBottom: 2 }}>{n}</div>
-            <div style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 9, fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.1em" }}>{l}</div>
+
+      <h1 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(36px, 6vw, 84px)", fontWeight: 900, lineHeight: 1.05, color: "var(--text-primary)", letterSpacing: "-0.01em", marginBottom: 8, opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.08s both" : "none" }}>
+        FUTURE-PROOF
+      </h1>
+      
+      {/* Gradient Animated Text */}
+      <h1 style={{ 
+        fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(36px, 6vw, 84px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.01em", marginBottom: 32, 
+        background: "linear-gradient(90deg, #6C2BD9 0%, #A78BFA 45%, #00FFC6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", 
+        backgroundSize: "200% auto", animation: vis ? "fadeUp 0.65s ease 0.16s both, textShimmer 4s linear infinite" : "none", opacity: vis ? 1 : 0
+      }}>
+        YOUR ENTERPRISE.
+      </h1>
+
+      <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", lineHeight: 1.75, color: "var(--text-secondary)", maxWidth: 680, marginBottom: 50, opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.24s both" : "none" }}>
+        Stop bolting on legacy solutions. We engineer cohesive, quantum-safe, AI-driven ecosystems designed to accelerate your growth and neutralize threats before they exist. Partner with QRYPTEX to build systems that scale infinitely.
+      </p>
+
+      {/* Action Buttons */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginBottom: "60px", opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.32s both" : "none" }}>
+        <button 
+          className="header-primary-btn"
+          onClick={() => navigate('/contact')}
+        >
+          INITIALIZE PROJECT
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+        <button 
+          className="header-secondary-btn"
+          onClick={() => document.getElementById('services-grid').scrollIntoView({ behavior: 'smooth' })}
+        >
+          EXPLORE CAPABILITIES
+        </button>
+      </div>
+
+      {/* Glossy Stats Bar */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 0, opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.4s both" : "none", border: "1px solid rgba(108,43,217,0.2)", borderRadius: "4px", overflow: "hidden", background: "rgba(5,3,13,0.5)", backdropFilter: "blur(10px)" }}>
+        {[
+          ["Full-Stack", "End-To-End Coverage"], 
+          ["Military-Grade", "Zero-Trust Architecture"], 
+          ["Enterprise SLA", "99.99% Guaranteed Uptime"], 
+          ["Unified Stack", "Seamless Integration"]
+        ].map(([n, l], i) => (
+          <div key={l} style={{ flex: "1 1 200px", padding: "20px 24px", borderRight: i !== 3 ? "1px solid rgba(108,43,217,0.2)" : "none", borderBottom: "none", background: "rgba(108,43,217,0.03)" }}>
+            <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: "var(--accent-green)", marginBottom: 4 }}>{n}</div>
+            <div style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 11, fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.15em" }}>{l}</div>
           </div>
         ))}
       </div>
@@ -569,6 +572,50 @@ export default function Services() {
         @keyframes scanH { 0%{transform:translateX(-100%)} 100%{transform:translateX(600%)} }
         @keyframes rotateSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
         @keyframes barPulse { 0%,100%{opacity:0.35;transform:scaleY(0.85)} 50%{opacity:1;transform:scaleY(1)} }
+        @keyframes textShimmer { to { background-position: 200% center; } } /* New shimmer animation */
+
+        /* ── NEW HEADER BUTTON STYLES ── */
+        .header-primary-btn {
+          background: rgba(0, 255, 198, 0.1);
+          border: 1px solid var(--accent-green);
+          color: var(--accent-green);
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          padding: 14px 28px;
+          border-radius: 4px;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 0 15px rgba(0, 255, 198, 0.15), inset 0 0 10px rgba(0, 255, 198, 0.05);
+        }
+        .header-primary-btn:hover {
+          background: var(--accent-green);
+          color: var(--bg-deep);
+          box-shadow: 0 0 25px rgba(0, 255, 198, 0.4);
+          transform: translateY(-2px);
+        }
+        .header-secondary-btn {
+          background: rgba(108, 43, 217, 0.05);
+          border: 1px solid rgba(108, 43, 217, 0.4);
+          color: var(--text-primary);
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          padding: 14px 28px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .header-secondary-btn:hover {
+          background: rgba(108, 43, 217, 0.2);
+          border-color: var(--purple-accent);
+          transform: translateY(-2px);
+        }
 
         .nav-link {
           position:relative; font-family:'Rajdhani',sans-serif;
@@ -601,8 +648,7 @@ export default function Services() {
           .svc-grid, .hi-grid { grid-template-columns: 1fr !important; }
           .desktop-nav { display: none !important; }
           #hamburger { display: flex !important; }
-          .page-header-stats { flex-direction: row !important; flex-wrap: wrap !important; }
-          .page-header-stats > div { flex: 1 1 calc(50% - 1px) !important; min-width: 0 !important; }
+          .header-primary-btn, .header-secondary-btn { width: 100%; justify-content: center; }
         }
         @media (max-width: 480px) {
           .svc-grid { gap: 14px !important; }
@@ -619,7 +665,6 @@ export default function Services() {
           <AmbientCanvas />
         </div>
 
-        {/* ── White particles layer (sits just above AmbientCanvas) ── */}
         <WhiteParticles />
 
         <div style={{ position: "fixed", top: "28%", left: 0, right: 0, height: 1, zIndex: 1, pointerEvents: "none", overflow: "hidden" }}>
@@ -680,7 +725,7 @@ export default function Services() {
             <PageHeader />
           </div>
 
-          <div style={{ height: 1, background: "linear-gradient(90deg,transparent,rgba(0,255,198,0.22),rgba(108,43,217,0.3),transparent)" }} />
+          <div id="services-grid" style={{ height: 1, background: "linear-gradient(90deg,transparent,rgba(0,255,198,0.22),rgba(108,43,217,0.3),transparent)" }} />
 
           <div style={{ maxWidth: 1160, margin: "0 auto", padding: "64px 5% 72px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 44 }}>
@@ -712,7 +757,7 @@ export default function Services() {
           </div>
 
           <div style={{ padding: "20px 5%", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: "rgba(161,161,194,0.22)", letterSpacing: "0.1em" }}>© 2025 QRYPTEX — ALL SYSTEMS OPERATIONAL</span>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: "rgba(161,161,194,0.22)", letterSpacing: "0.1em" }}>© 2026 QRYPTEX — ALL SYSTEMS OPERATIONAL</span>
             <div style={{ display: "flex", gap: 4, alignItems: "flex-end" }}>
               {[7, 11, 15, 9, 5].map((h, i) => (
                 <div key={i} style={{ width: 3, height: h, borderRadius: 1, background: `rgba(108,43,217,${0.28 + i * 0.1})`, animation: `barPulse ${1.2 + i * 0.28}s ease-in-out infinite`, animationDelay: `${i * 0.13}s` }} />
