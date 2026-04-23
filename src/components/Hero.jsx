@@ -346,7 +346,12 @@ export default function Hero() {
               opacity: isLoaded ? 1 : 0, transform: isLoaded ? "translateY(0)" : "translateY(15px)",
               transition: `all 1.2s ${cinematicEase} 0.6s`
             }}>
-              <button className="cta-primary" onClick={() => window.location.href = '/services'}>Explore Services</button>
+<button 
+  className="cta-primary" 
+  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+>
+  Explore Services
+</button>
               <button className="cta-secondary">Deploy AI Stack</button>
             </div>
 
