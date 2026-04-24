@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const NAV_LINKS = [
   { label: "Home",     href: "/"         },
-  { label: "Services", href: "http://localhost:5173/#services" },
+  { label: "Services", href: "/#services" },
   { label: "About Us", href: "/about"    },
   { label: "Contact",  href: "/contact"  },
 ];
@@ -25,6 +26,7 @@ const BUDGET_TIERS = [
   "To be decided"
 ];
 
+// ── Background Effects ─────────────
 function AuroraCanvas() {
   const ref = useRef(null);
   useEffect(() => {
@@ -32,7 +34,7 @@ function AuroraCanvas() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     let raf, t = 0;
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize();
     window.addEventListener("resize", resize);
     const orbs = [
@@ -71,10 +73,9 @@ function AuroraCanvas() {
     draw();
     return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
   }, []);
-  return <canvas ref={ref} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} />;
+  return <canvas ref={ref} style={{ position: "fixed", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }} />;
 }
 
-// ── White floating particles layer ──────────────────────────────────────────
 function WhiteParticles() {
   const ref = useRef(null);
   useEffect(() => {
@@ -120,7 +121,6 @@ function WhiteParticles() {
   }, []);
   return <canvas ref={ref} style={{ position: "fixed", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }} />;
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
 function HexNodes() {
   return (
@@ -139,6 +139,7 @@ function HexNodes() {
     </svg>
   );
 }
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function Contact() {
   const [scrolled, setScrolled] = useState(false);
@@ -149,7 +150,9 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [charCount, setCharCount] = useState(0);
 
+  // Auto-scroll to top and detect header scroll
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fn = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
@@ -170,14 +173,16 @@ export default function Contact() {
     width: "100%", padding: "14px 16px", borderRadius: 10,
     background: focused === field ? "linear-gradient(145deg, rgba(108,43,217,0.08), rgba(5,3,13,0.7))" : "linear-gradient(145deg, rgba(255,255,255,0.03), rgba(5,3,13,0.6))",
     border: `1px solid ${focused === field ? "rgba(108,43,217,0.45)" : "rgba(255,255,255,0.07)"}`,
-    color: "#E9E6FF", fontFamily: "'Rajdhani', sans-serif", fontSize: 14, fontWeight: 500, outline: "none",
-    backdropFilter: "blur(12px)", transition: "all 0.3s ease",
-    boxShadow: focused === field ? "0 0 0 3px rgba(108,43,217,0.12), inset 0 1px 0 rgba(255,255,255,0.08)" : "inset 0 1px 0 rgba(255,255,255,0.04)",
+    color: "#E9E6FF", fontFamily: "'Rajdhani', sans-serif", fontSize: 15, fontWeight: 500, outline: "none",
+    backdropFilter: "blur(12px)", transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+    boxShadow: focused === field ? "0 8px 20px rgba(108,43,217,0.15), inset 0 1px 0 rgba(255,255,255,0.08)" : "inset 0 1px 0 rgba(255,255,255,0.04)",
+    transform: focused === field ? "translateY(-2px)" : "translateY(0)" // Tactile lift on focus
   });
 
   const labelStyle = {
     display: "block", fontFamily: "'JetBrains Mono', monospace", fontSize: 9,
     letterSpacing: "0.18em", color: "rgba(139,92,246,0.6)", marginBottom: 8, textTransform: "uppercase",
+    transition: "color 0.3s ease"
   };
 
   return (
@@ -190,11 +195,9 @@ export default function Contact() {
 
         @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
         @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-        @keyframes cardReveal { from{opacity:0;transform:translateY(30px) scale(0.96)} to{opacity:1;transform:translateY(0) scale(1)} }
         @keyframes blip { 0%,100%{opacity:0.5;transform:scale(0.9)} 50%{opacity:1;transform:scale(1.2)} }
         @keyframes rotateSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
         @keyframes scanH { 0%{transform:translateX(-100%)} 100%{transform:translateX(700%)} }
-        @keyframes barPulse { 0%,100%{opacity:0.3;transform:scaleY(0.85)} 50%{opacity:1;transform:scaleY(1)} }
         @keyframes pulseRing { 0%{transform:scale(1);opacity:0.6} 100%{transform:scale(1.8);opacity:0} }
         @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
         @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
@@ -215,6 +218,13 @@ export default function Contact() {
         .contact-layout { display:grid; grid-template-columns:1fr 420px; gap:40px; align-items:flex-start; }
         .form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
 
+        /* Interactive micro-animations */
+        .hover-step { transition: all 0.3s ease; }
+        .hover-step:hover { transform: translateX(6px); }
+        
+        .hover-badge { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .hover-badge:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 4px 12px rgba(0,255,198,0.15); border-color: rgba(0,255,198,0.4) !important; }
+
         @media (max-width: 1060px) {
           .contact-layout { grid-template-columns:1fr !important; }
         }
@@ -223,7 +233,7 @@ export default function Contact() {
           #hamburger { display:flex !important; }
           .form-row-2 { grid-template-columns:1fr !important; }
           .form-panel { padding:24px 18px !important; }
-          .hero-pad { padding:100px 5% 48px !important; }
+          .hero-pad { padding:120px 5% 48px !important; } /* Extra top padding for mobile */
         }
 
         input::placeholder, textarea::placeholder, select option[disabled] { color:rgba(161,161,194,0.28); }
@@ -236,11 +246,7 @@ export default function Contact() {
 
       <div style={{ width: "100%", minHeight: "100vh", background: "#05030D", position: "relative", overflowX: "hidden" }}>
 
-        <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}>
-          <AuroraCanvas />
-        </div>
-
-        {/* ── White particles layer ── */}
+        <AuroraCanvas />
         <WhiteParticles />
 
         <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", opacity: 0.025, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`, backgroundRepeat: "repeat", backgroundSize: "128px 128px" }} />
@@ -256,10 +262,10 @@ export default function Contact() {
           background: scrolled ? "rgba(5,3,13,0.88)" : "rgba(5,3,13,0.5)",
           backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
-          transition: "background 0.4s",
+          transition: "all 0.4s ease",
           boxShadow: scrolled ? "0 4px 30px rgba(0,0,0,0.4)" : "none",
         }}>
-          <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 9 }}>
+          <Link to="/" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 9 }}>
             <div style={{ width: 30, height: 30, background: "linear-gradient(135deg, rgba(108,43,217,0.3), rgba(0,255,198,0.15))", border: "1px solid rgba(108,43,217,0.4)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>
               <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
                 <polygon points="16,2 29,9 29,23 16,30 3,23 3,9" fill="none" stroke="#6C2BD9" strokeWidth="1.8"/>
@@ -267,11 +273,11 @@ export default function Contact() {
               </svg>
             </div>
             <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 15, fontWeight: 900, letterSpacing: "0.05em", color: "#E9E6FF" }}>Q<span style={{ color: "#00FFC6" }}>RYP</span>TEX</span>
-          </a>
+          </Link>
 
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 32 }}>
             {NAV_LINKS.map((l) => (
-              <a key={l.label} href={l.href} className={`nav-link${l.href === "/contact" ? " active" : ""}`}>{l.label}</a>
+              <Link key={l.label} to={l.href} className={`nav-link${l.href.includes("/contact") ? " active" : ""}`}>{l.label}</Link>
             ))}
           </div>
 
@@ -283,9 +289,9 @@ export default function Contact() {
         </nav>
 
         {menuOpen && (
-          <div style={{ position: "fixed", top: 62, left: 0, right: 0, zIndex: 99, background: "rgba(5,3,13,0.96)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(108,43,217,0.18)", padding: "20px 6%", display: "flex", flexDirection: "column", gap: 18, animation: "fadeUp 0.2s ease both" }}>
+          <div style={{ position: "fixed", top: 62, left: 0, right: 0, zIndex: 99, background: "rgba(5,3,13,0.98)", backdropFilter: "blur(24px)", borderBottom: "1px solid rgba(108,43,217,0.18)", padding: "30px 6% 40px", display: "flex", flexDirection: "column", gap: 24, animation: "fadeUp 0.3s ease both", boxShadow: "0 20px 40px rgba(0,0,0,0.5)" }}>
             {NAV_LINKS.map((l) => (
-              <a key={l.label} href={l.href} className="nav-link" onClick={() => setMenuOpen(false)}>{l.label}</a>
+              <Link key={l.label} to={l.href} className="nav-link" onClick={() => setMenuOpen(false)} style={{ fontSize: "16px" }}>{l.label}</Link>
             ))}
           </div>
         )}
@@ -312,9 +318,10 @@ export default function Contact() {
 
           <div style={{ paddingBottom: "100px", position: "relative", zIndex: 10 }}>
             <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 5%" }}>
-              <div className="contact-layout" style={{ animation: "fadeUp 0.8s ease 0.3s both" }}>
+              <div className="contact-layout">
 
-                <div>
+                {/* Form Section */}
+                <div style={{ animation: "fadeUp 0.8s ease 0.3s both" }}>
                   {submitted ? (
                     <div style={{ padding: "56px 40px", borderRadius: 18, background: "linear-gradient(145deg, rgba(0,255,198,0.07) 0%, rgba(8,5,20,0.7) 100%)", backdropFilter: "blur(24px)", border: "1px solid rgba(0,255,198,0.2)", boxShadow: "0 0 60px rgba(0,255,198,0.08), inset 0 1px 0 rgba(255,255,255,0.1)", textAlign: "center", animation: "successPop 0.7s cubic-bezier(0.34,1.2,0.64,1) both", position: "relative", overflow: "hidden" }}>
                       <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: 1, background: "linear-gradient(90deg, transparent, rgba(0,255,198,0.7) 50%, transparent)" }} />
@@ -333,30 +340,30 @@ export default function Contact() {
 
                       <div className="form-row-2">
                         <div>
-                          <label style={labelStyle}>Your Name *</label>
+                          <label style={{ ...labelStyle, color: focused === "name" ? "#A78BFA" : "rgba(139,92,246,0.6)" }}>Your Name *</label>
                           <input type="text" placeholder="Ada Lovelace" value={form.name} onChange={e => handleChange("name", e.target.value)} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} style={inputStyle("name")} />
                         </div>
                         <div>
-                          <label style={labelStyle}>Company / Project</label>
+                          <label style={{ ...labelStyle, color: focused === "company" ? "#A78BFA" : "rgba(139,92,246,0.6)" }}>Company / Project</label>
                           <input type="text" placeholder="Acme Startup" value={form.company} onChange={e => handleChange("company", e.target.value)} onFocus={() => setFocused("company")} onBlur={() => setFocused(null)} style={inputStyle("company")} />
                         </div>
                       </div>
 
                       <div style={{ marginBottom: 20 }}>
-                        <label style={labelStyle}>Email Address *</label>
+                        <label style={{ ...labelStyle, color: focused === "email" ? "#A78BFA" : "rgba(139,92,246,0.6)" }}>Email Address *</label>
                         <input type="email" placeholder="ada@hello.com" value={form.email} onChange={e => handleChange("email", e.target.value)} onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} style={inputStyle("email")} />
                       </div>
 
                       <div className="form-row-2">
                         <div>
-                          <label style={labelStyle}>What do you need?</label>
+                          <label style={{ ...labelStyle, color: focused === "type" ? "#A78BFA" : "rgba(139,92,246,0.6)" }}>What do you need?</label>
                           <select value={form.type} onChange={e => handleChange("type", e.target.value)} onFocus={() => setFocused("type")} onBlur={() => setFocused(null)} style={{ ...inputStyle("type"), appearance: "none", WebkitAppearance: "none", cursor: "pointer" }}>
                             <option value="" disabled>Select an option…</option>
                             {INQUIRY_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                           </select>
                         </div>
                         <div>
-                          <label style={labelStyle}>Estimated Budget</label>
+                          <label style={{ ...labelStyle, color: focused === "budget" ? "#A78BFA" : "rgba(139,92,246,0.6)" }}>Estimated Budget</label>
                           <select value={form.budget} onChange={e => handleChange("budget", e.target.value)} onFocus={() => setFocused("budget")} onBlur={() => setFocused(null)} style={{ ...inputStyle("budget"), appearance: "none", WebkitAppearance: "none", cursor: "pointer" }}>
                             <option value="" disabled>Select a range…</option>
                             {BUDGET_TIERS.map(b => <option key={b} value={b}>{b}</option>)}
@@ -366,7 +373,7 @@ export default function Contact() {
 
                       <div style={{ marginBottom: 28 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                          <label style={{ ...labelStyle, marginBottom: 0 }}>How can we help? *</label>
+                          <label style={{ ...labelStyle, marginBottom: 0, color: focused === "message" ? "#A78BFA" : "rgba(139,92,246,0.6)" }}>How can we help? *</label>
                           <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, color: charCount > 500 ? "rgba(0,255,198,0.5)" : "rgba(161,161,194,0.25)", transition: "color 0.3s" }}>{charCount}/1000</span>
                         </div>
                         <textarea rows={5} placeholder="Tell us about your project goals, timelines, or just drop a friendly hello..." value={form.message} maxLength={1000} onChange={e => handleChange("message", e.target.value)} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} style={{ ...inputStyle("message"), resize: "vertical", minHeight: 120, lineHeight: 1.6 }} />
@@ -386,8 +393,11 @@ export default function Contact() {
                   )}
                 </div>
 
+                {/* Right Side Info Panels with Cascading Animation */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                  <div style={{ padding: "28px 26px", borderRadius: 16, background: "linear-gradient(145deg, rgba(0,255,198,0.06) 0%, rgba(8,5,20,0.7) 100%)", backdropFilter: "blur(22px)", WebkitBackdropFilter: "blur(22px)", border: "1px solid rgba(0,255,198,0.15)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.09), 0 8px 32px rgba(0,0,0,0.35)", position: "relative", overflow: "hidden" }}>
+                  
+                  {/* Promise Panel */}
+                  <div style={{ padding: "28px 26px", borderRadius: 16, background: "linear-gradient(145deg, rgba(0,255,198,0.06) 0%, rgba(8,5,20,0.7) 100%)", backdropFilter: "blur(22px)", WebkitBackdropFilter: "blur(22px)", border: "1px solid rgba(0,255,198,0.15)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.09), 0 8px 32px rgba(0,0,0,0.35)", position: "relative", overflow: "hidden", animation: "fadeUp 0.6s ease 0.4s both" }}>
                     <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: 1, background: "linear-gradient(90deg, transparent, rgba(0,255,198,0.6) 50%, transparent)" }} />
                     <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.2em", color: "rgba(0,255,198,0.55)", marginBottom: 16 }}>// OUR PROMISE</div>
                     {[
@@ -405,7 +415,8 @@ export default function Contact() {
                     ))}
                   </div>
 
-                  <div style={{ padding: "28px 26px", borderRadius: 16, background: "linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(8,5,20,0.65) 100%)", backdropFilter: "blur(22px)", WebkitBackdropFilter: "blur(22px)", border: "1px solid rgba(255,255,255,0.07)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.35)", position: "relative", overflow: "hidden" }}>
+                  {/* Steps Panel */}
+                  <div style={{ padding: "28px 26px", borderRadius: 16, background: "linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(8,5,20,0.65) 100%)", backdropFilter: "blur(22px)", WebkitBackdropFilter: "blur(22px)", border: "1px solid rgba(255,255,255,0.07)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.35)", position: "relative", overflow: "hidden", animation: "fadeUp 0.6s ease 0.5s both" }}>
                     <div style={{ position: "absolute", top: 0, left: "10%", right: "10%", height: 1, background: "linear-gradient(90deg, transparent, rgba(139,92,246,0.5) 50%, transparent)" }} />
                     <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.2em", color: "rgba(139,92,246,0.55)", marginBottom: 18 }}>// WHAT HAPPENS NEXT</div>
                     {[
@@ -414,8 +425,8 @@ export default function Contact() {
                       { n: "03", t: "Clear Proposal", d: "You receive a clear timeline, deliverables, and transparent pricing." },
                       { n: "04", t: "Liftoff", d: "We set up a dedicated communication channel and start building." },
                     ].map((step) => (
-                      <div key={step.n} style={{ display: "flex", gap: 14, marginBottom: 18 }}>
-                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: "rgba(108,43,217,0.55)", flexShrink: 0, marginTop: 1, letterSpacing: "0.04em" }}>{step.n}</div>
+                      <div key={step.n} className="hover-step" style={{ display: "flex", gap: 14, marginBottom: 18 }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: "rgba(108,43,217,0.6)", flexShrink: 0, marginTop: 1, letterSpacing: "0.04em" }}>{step.n}</div>
                         <div>
                           <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 12, fontWeight: 700, color: "#C4BFEA", letterSpacing: "0.04em", marginBottom: 4 }}>{step.t}</div>
                           <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 13.5, lineHeight: 1.6, color: "rgba(161,161,194,0.6)" }}>{step.d}</p>
@@ -424,17 +435,19 @@ export default function Contact() {
                     ))}
                   </div>
 
-                  <div style={{ padding: "22px 24px", borderRadius: 14, background: "linear-gradient(145deg, rgba(108,43,217,0.07), rgba(5,3,13,0.65))", backdropFilter: "blur(16px)", border: "1px solid rgba(108,43,217,0.15)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)" }}>
+                  {/* Badges Panel */}
+                  <div style={{ padding: "22px 24px", borderRadius: 14, background: "linear-gradient(145deg, rgba(108,43,217,0.07), rgba(5,3,13,0.65))", backdropFilter: "blur(16px)", border: "1px solid rgba(108,43,217,0.15)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)", animation: "fadeUp 0.6s ease 0.6s both" }}>
                     <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.2em", color: "rgba(108,43,217,0.45)", marginBottom: 16 }}>// WHY QRYPTEX?</div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                       {["Rapid Prototyping", "Scalable Systems", "Modern Stack", "Transparent Pricing", "Dedicated Support", "Agile Delivery"].map((badge) => (
-                        <div key={badge} style={{ padding: "8px 12px", borderRadius: 8, background: "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(108,43,217,0.04))", border: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 7 }}>
+                        <div key={badge} className="hover-badge" style={{ padding: "8px 12px", borderRadius: 8, background: "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(108,43,217,0.04))", border: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 7 }}>
                           <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#00FFC6", flexShrink: 0, boxShadow: "0 0 5px rgba(0,255,198,0.5)" }} />
                           <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 12, color: "rgba(180,175,220,0.8)", fontWeight: 600 }}>{badge}</span>
                         </div>
                       ))}
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
