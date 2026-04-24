@@ -234,10 +234,10 @@ export default function Footer() {
           </div>
           
           <div style={{ display: "flex", gap: "24px" }}>
-            <Link to="/privacy-policy" className="footer-legal-link">
+            <Link to="/privacy" className="footer-legal-link">
               Privacy_Policy
             </Link>
-            <Link to="/terms-of-service" className="footer-legal-link">
+            <Link to="/terms" className="footer-legal-link">
               Terms_Of_Service
             </Link>
           </div>
