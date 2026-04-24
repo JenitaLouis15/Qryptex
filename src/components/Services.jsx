@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { label: "Contact",    href: "/contact"    }, 
 ];
 
+// Removed Blockchain and Quantum. Re-indexed to 01, 02, 03
 const SERVICES = [
   {
     id: "cybersec",
@@ -20,7 +21,6 @@ const SERVICES = [
         <path d="M12 18l4.5 4.5L24 13" stroke="#00FFC6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
-    
     title: "Cybersecurity",
     subtitle: "Solutions",
     tagline: "Threat architecture designed to outpace adversaries — not just detect them.",
@@ -34,35 +34,8 @@ const SERVICES = [
     accentRgb: "0,255,198",
   },
   {
-    id: "blockchain",
-    index: "02",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <rect x="4"  y="14" width="9"  height="9"  rx="1.5" stroke="currentColor" strokeWidth="1.3"/>
-        <rect x="23" y="14" width="9"  height="9"  rx="1.5" stroke="currentColor" strokeWidth="1.3"/>
-        <rect x="13.5" y="4"  width="9" height="9"  rx="1.5" stroke="currentColor" strokeWidth="1.3"/>
-        <rect x="13.5" y="23" width="9" height="9"  rx="1.5" stroke="currentColor" strokeWidth="1.3"/>
-        <line x1="13" y1="18.5" x2="9"  y2="18.5" stroke="#8B5CF6" strokeWidth="1.2"/>
-        <line x1="23" y1="18.5" x2="27" y2="18.5" stroke="#8B5CF6" strokeWidth="1.2"/>
-        <line x1="18" y1="13"   x2="18" y2="9"    stroke="#8B5CF6" strokeWidth="1.2"/>
-        <line x1="18" y1="23"   x2="18" y2="27"   stroke="#8B5CF6" strokeWidth="1.2"/>
-      </svg>
-    ),
-    title: "Blockchain",
-    subtitle: "Development",
-    tagline: "Immutable infrastructure built for enterprise trust — not prototype demos.",
-    capabilities: [
-      "Smart contract architecture (EVM, Solana, Cosmos)",
-      "Private & permissioned ledger deployment",
-      "DeFi protocol design & on-chain audit preparation",
-    ],
-    stack: "EVM · Solana · Hyperledger · Cosmos",
-    accent: "#8B5CF6",
-    accentRgb: "139,92,246",
-  },
-  {
     id: "ai",
-    index: "03",
+    index: "02",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
         <circle cx="18" cy="18" r="5"  stroke="currentColor" strokeWidth="1.3"/>
@@ -93,32 +66,8 @@ const SERVICES = [
     accentRgb: "167,139,250",
   },
   {
-    id: "quantum",
-    index: "04",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <ellipse cx="18" cy="18" rx="14" ry="6" stroke="currentColor" strokeWidth="1.3"/>
-        <ellipse cx="18" cy="18" rx="14" ry="6" stroke="currentColor" strokeWidth="1.3" transform="rotate(60 18 18)"/>
-        <ellipse cx="18" cy="18" rx="14" ry="6" stroke="currentColor" strokeWidth="1.3" transform="rotate(120 18 18)"/>
-        <circle cx="18" cy="18" r="3" fill="#00FFC6"/>
-        <circle cx="18" cy="18" r="1.5" fill="#05030D"/>
-      </svg>
-    ),
-    title: "Post-Quantum",
-    subtitle: "Encryption",
-    tagline: "Cryptographic layers hardened against adversaries with quantum compute access.",
-    capabilities: [
-      "NIST PQC implementation (CRYSTALS-Kyber, Dilithium)",
-      "Hybrid classical/quantum key exchange migration",
-      "Quantum-safe PKI for regulated industries",
-    ],
-    stack: "NIST PQC · CRYSTALS · SPHINCS+ · OQS",
-    accent: "#00FFC6",
-    accentRgb: "0,255,198",
-  },
-  {
     id: "fullstack",
-    index: "05",
+    index: "03",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
         <rect x="4"   y="7"  width="28" height="18" rx="2" stroke="currentColor" strokeWidth="1.3"/>
@@ -177,7 +126,7 @@ const HIGHLIGHTS = [
     ),
     value: "Emerging Tech",
     label: "Innovation Focus",
-    body: "From post-quantum cryptography to autonomous AI agents — we work at the frontier. Our team tracks NIST drafts, arxiv papers, and protocol RFCs the week they drop.",
+    body: "From zero-trust network modeling to autonomous AI agents — we work at the frontier. Our team tracks protocol RFCs and arxiv papers the week they drop.",
     accent: "#A78BFA",
     accentRgb: "167,139,250",
   },
@@ -194,7 +143,7 @@ const HIGHLIGHTS = [
     ),
     value: "Integrated Team",
     label: "Cross-Discipline Experts",
-    body: "Blockchain devs, quantum specialists, full-stack engineers, AI researchers, and UI/UX designers — all under one roof, shipping together.",
+    body: "Security researchers, AI specialists, full-stack engineers, and UI/UX designers — all under one roof, shipping together.",
     accent: "#6C2BD9",
     accentRgb: "108,43,217",
   },
@@ -397,29 +346,76 @@ function ServiceCard({ svc, index }) {
   );
 }
 
+// ── REDESIGNED FULL-WIDTH CUSTOM CELL ─────────────────────────────────────────
 function CustomCell() {
   const [hov, setHov] = useState(false);
+  const [vis, setVis] = useState(false);
+  const ref = useRef(null);
   const navigate = useNavigate(); 
+
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVis(true); io.disconnect(); } }, { threshold: 0.1 });
+    if (ref.current) io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <div
+      ref={ref}
+      className="custom-cell-wrapper"
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       onClick={() => navigate("/contact")}
       style={{
-        padding: "36px 30px", borderRadius: 4,
-        border: `1px dashed ${hov ? "rgba(108,43,217,0.45)" : "rgba(108,43,217,0.16)"}`,
-        background: hov ? "rgba(108,43,217,0.05)" : "transparent",
-        display: "flex", flexDirection: "column", justifyContent: "center", gap: 16,
-        cursor: "pointer", transition: "all 0.38s ease",
+        marginTop: 22,
+        padding: "40px 50px", 
+        borderRadius: 4,
+        border: `1px dashed ${hov ? "var(--accent-green)" : "rgba(108,43,217,0.3)"}`,
+        background: hov ? "rgba(0,255,198,0.03)" : "rgba(5,3,13,0.6)",
+        backdropFilter: "blur(12px)",
+        display: "flex", 
+        flexDirection: "row",
+        alignItems: "center", 
+        justifyContent: "space-between", 
+        gap: 30,
+        cursor: "pointer", 
+        transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         transform: hov ? "translateY(-4px)" : "translateY(0)",
-        minHeight: 200,
+        boxShadow: hov ? "0 10px 30px rgba(0,255,198,0.08), inset 0 0 20px rgba(0,255,198,0.03)" : "none",
+        opacity: vis ? 1 : 0,
+        animation: vis ? `cardReveal 0.7s cubic-bezier(0.34,1.4,0.64,1) 0.35s both` : "none",
       }}
     >
-      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: "rgba(108,43,217,0.32)", letterSpacing: "0.18em" }}>// 06</span>
-      <h3 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 15, fontWeight: 700, letterSpacing: "0.05em", color: hov ? "var(--text-primary)" : "rgba(233,230,255,0.3)", transition: "color 0.3s" }}>CUSTOM SCOPE</h3>
-      <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 13.5, lineHeight: 1.65, color: hov ? "var(--text-secondary)" : "rgba(161,161,194,0.3)", transition: "color 0.3s" }}>Bespoke architecture tailored to your security posture, scale requirements, and compliance landscape.</p>
-      <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: hov ? "var(--accent-green)" : "rgba(108,43,217,0.28)", transition: "color 0.3s, transform 0.3s", transform: hov ? "translateX(6px)" : "translateX(0)", display: "inline-block" }}>Get in touch →</span>
+      <div style={{ flex: 1 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+          <span style={{ width: 8, height: 8, borderRadius: "50%", background: hov ? "var(--accent-green)" : "rgba(108,43,217,0.6)", transition: "background 0.3s", animation: hov ? "blip 1.5s infinite" : "none" }} />
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: hov ? "var(--accent-green)" : "rgba(108,43,217,0.6)", letterSpacing: "0.2em", transition: "color 0.3s" }}>
+            // CUSTOM SCOPE & ARCHITECTURE
+          </span>
+        </div>
+        <h3 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 800, letterSpacing: "0.05em", color: "var(--text-primary)", marginBottom: 12 }}>
+          REQUIRE BESPOKE INFRASTRUCTURE?
+        </h3>
+        <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 15, lineHeight: 1.6, color: "var(--text-secondary)", maxWidth: 700 }}>
+          Tailored engineering aligned to your specific security posture, scale requirements, and compliance landscape. We don't just build software — we architect unassailable ecosystems.
+        </p>
+      </div>
+      
+      <div style={{
+        display: "inline-flex", alignItems: "center", gap: 10,
+        padding: "16px 32px", borderRadius: 4,
+        background: hov ? "var(--accent-green)" : "rgba(0,255,198,0.05)",
+        color: hov ? "var(--bg-deep)" : "var(--accent-green)",
+        border: `1px solid ${hov ? "transparent" : "rgba(0,255,198,0.4)"}`,
+        fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em",
+        transition: "all 0.3s",
+        whiteSpace: "nowrap"
+      }}>
+        <span>INITIALIZE</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: hov ? "translateX(4px)" : "translateX(0)", transition: "transform 0.3s" }}>
+          <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </div>
     </div>
   );
 }
@@ -572,9 +568,9 @@ export default function Services() {
         @keyframes scanH { 0%{transform:translateX(-100%)} 100%{transform:translateX(600%)} }
         @keyframes rotateSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
         @keyframes barPulse { 0%,100%{opacity:0.35;transform:scaleY(0.85)} 50%{opacity:1;transform:scaleY(1)} }
-        @keyframes textShimmer { to { background-position: 200% center; } } /* New shimmer animation */
+        @keyframes textShimmer { to { background-position: 200% center; } } 
 
-        /* ── NEW HEADER BUTTON STYLES ── */
+        /* ── HEADER BUTTON STYLES ── */
         .header-primary-btn {
           background: rgba(0, 255, 198, 0.1);
           border: 1px solid var(--accent-green);
@@ -643,6 +639,14 @@ export default function Services() {
         @media (max-width: 1100px) {
           .svc-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .hi-grid  { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 768px) {
+          .custom-cell-wrapper {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            padding: 30px !important;
+            gap: 24px !important;
+          }
         }
         @media (max-width: 660px) {
           .svc-grid, .hi-grid { grid-template-columns: 1fr !important; }
@@ -733,10 +737,14 @@ export default function Services() {
               <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.2em", color: "rgba(108,43,217,0.45)" }}>SERVICES · {SERVICES.length} DISCIPLINES</span>
               <div style={{ height: 1, flex: 1, background: "rgba(108,43,217,0.18)" }} />
             </div>
+            
+            {/* The 3 Core Services in the Grid */}
             <div className="svc-grid">
               {SERVICES.map((svc, i) => <ServiceCard key={svc.id} svc={svc} index={i} />)}
-              <CustomCell />
             </div>
+
+            {/* The New Full-Width Custom Cell placed below the grid */}
+            <CustomCell />
           </div>
 
           <div style={{ borderTop: "1px solid rgba(108,43,217,0.1)", borderBottom: "1px solid rgba(108,43,217,0.1)", background: "rgba(6,4,16,0.7)", backdropFilter: "blur(10px)" }}>
