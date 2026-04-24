@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom"; // Added for seamless SPA routing
 
 const NAV_LINKS = [
   { label: "Home",     href: "/"         },
-  { label: "Services", href: "http://localhost:5173/services" },
+  { label: "Services", href: "/#services" },
   { label: "About Us", href: "/about"    },
   { label: "Contact",  href: "/contact"  },
 ];
@@ -149,18 +150,39 @@ function ValueCard({ v, index }) {
 }
 
 function TenetPill({ t }) {
+  const [hov, setHov] = useState(false);
   return (
-    <div style={{ padding: "16px 20px", borderRadius: 10, background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(108,43,217,0.06) 100%)", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.3)", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-      <div style={{ position: "absolute", top: 0, left: "20%", right: "20%", height: 1, background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)" }} />
-      <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "14px", fontWeight: 700, color: "#00FFC6", marginBottom: 4, letterSpacing: "0.02em" }}>{t.label}</div>
-      <div style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "11px", fontWeight: 500, color: "rgba(161,161,194,0.7)", letterSpacing: "0.05em" }}>{t.desc}</div>
+    <div 
+      onMouseEnter={() => setHov(true)} 
+      onMouseLeave={() => setHov(false)}
+      style={{ 
+        padding: "16px 20px", 
+        borderRadius: 10, 
+        background: hov ? "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(108,43,217,0.1) 100%)" : "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(108,43,217,0.06) 100%)", 
+        backdropFilter: "blur(16px)", 
+        border: "1px solid rgba(255,255,255,0.08)", 
+        boxShadow: hov ? "inset 0 1px 0 rgba(255,255,255,0.12), 0 8px 24px rgba(0,255,198,0.15)" : "inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.3)", 
+        position: "relative", 
+        overflow: "hidden", 
+        display: "flex", 
+        flexDirection: "column", 
+        justifyContent: "center",
+        transform: hov ? "translateY(-3px)" : "translateY(0)",
+        transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+      }}
+    >
+      <div style={{ position: "absolute", top: 0, left: "20%", right: "20%", height: 1, background: hov ? "linear-gradient(90deg, transparent, rgba(0,255,198,0.5), transparent)" : "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)", transition: "background 0.3s" }} />
+      <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "14px", fontWeight: 700, color: hov ? "#ffffff" : "#00FFC6", marginBottom: 4, letterSpacing: "0.02em", transition: "color 0.3s" }}>{t.label}</div>
+      <div style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "11px", fontWeight: 500, color: hov ? "rgba(255,255,255,0.85)" : "rgba(161,161,194,0.7)", letterSpacing: "0.05em", transition: "color 0.3s" }}>{t.desc}</div>
     </div>
   );
 }
 
 function MethodologyCard({ m, index }) {
   const [vis, setVis] = useState(false);
+  const [hov, setHov] = useState(false);
   const ref = useRef(null);
+  
   useEffect(() => {
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVis(true); io.disconnect(); } }, { threshold: 0.1 });
     if (ref.current) io.observe(ref.current);
@@ -168,13 +190,31 @@ function MethodologyCard({ m, index }) {
   }, []);
 
   return (
-    <div ref={ref} style={{ display: "flex", gap: 24, alignItems: "flex-start", opacity: vis ? 1 : 0, animation: vis ? `fadeUp 0.6s ease ${index * 0.15}s both` : "none", padding: "20px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-      <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 24, fontWeight: 900, color: "rgba(108,43,217,0.4)", textShadow: "0 0 12px rgba(108,43,217,0.2)" }}>
+    <div 
+      ref={ref} 
+      onMouseEnter={() => setHov(true)} 
+      onMouseLeave={() => setHov(false)}
+      style={{ 
+        display: "flex", 
+        gap: 24, 
+        alignItems: "flex-start", 
+        opacity: vis ? 1 : 0, 
+        animation: vis ? `fadeUp 0.6s ease ${index * 0.15}s both` : "none", 
+        padding: "24px 20px", 
+        borderRadius: "12px",
+        background: hov ? "rgba(255,255,255,0.03)" : "transparent",
+        borderBottom: hov ? "1px solid transparent" : "1px solid rgba(255,255,255,0.05)",
+        boxShadow: hov ? "inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.2)" : "none",
+        transform: hov ? "translateX(6px)" : "translateX(0)",
+        transition: "all 0.3s ease"
+      }}
+    >
+      <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 24, fontWeight: 900, color: hov ? "#00FFC6" : "rgba(108,43,217,0.4)", textShadow: hov ? "0 0 16px rgba(0,255,198,0.4)" : "0 0 12px rgba(108,43,217,0.2)", transition: "all 0.3s ease" }}>
         {m.phase}
       </div>
       <div>
-        <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 15, fontWeight: 700, color: "#D4D0F5", letterSpacing: "0.04em", marginBottom: 8 }}>{m.title}</div>
-        <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 14, lineHeight: 1.7, color: "rgba(161,161,194,0.7)", maxWidth: 500 }}>{m.desc}</p>
+        <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 15, fontWeight: 700, color: hov ? "#ffffff" : "#D4D0F5", letterSpacing: "0.04em", marginBottom: 8, transition: "color 0.3s" }}>{m.title}</div>
+        <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 14, lineHeight: 1.7, color: hov ? "rgba(200,195,240,0.9)" : "rgba(161,161,194,0.7)", maxWidth: 500, transition: "color 0.3s" }}>{m.desc}</p>
       </div>
     </div>
   );
@@ -184,7 +224,9 @@ export default function About() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // ── Auto Scroll to Top & Header Scroll Detection ──
   useEffect(() => {
+    window.scrollTo(0, 0); // Ensures page loads at the top
     const fn = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
@@ -228,6 +270,29 @@ export default function About() {
 
         .values-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
         .stats-row { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+        
+        /* Interactive Buttons */
+        .cta-btn-primary {
+          display: block; width: 100%; padding: 16px 0; border-radius: 10px; margin-bottom: 12px; cursor: pointer;
+          background: linear-gradient(135deg, #6C2BD9 0%, #4C1BA0 100%); border: 1px solid rgba(139,92,246,0.5);
+          color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; text-align: center; text-decoration: none;
+          box-shadow: 0 8px 24px rgba(108,43,217,0.35), inset 0 1px 0 rgba(255,255,255,0.15); transition: all 0.3s ease;
+        }
+        .cta-btn-primary:hover {
+          box-shadow: 0 12px 36px rgba(108,43,217,0.55), inset 0 1px 0 rgba(255,255,255,0.2); transform: translateY(-2px);
+        }
+        
+        .cta-btn-secondary {
+          display: block; width: 100%; padding: 15px 0; border-radius: 10px; cursor: pointer;
+          background: linear-gradient(135deg, rgba(0,255,198,0.06), rgba(0,255,198,0.02)); border: 1px solid rgba(0,255,198,0.2);
+          color: #00FFC6; font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; text-align: center; text-decoration: none;
+          backdrop-filter: blur(8px); boxShadow: inset 0 1px 0 rgba(0,255,198,0.1); transition: all 0.3s ease;
+        }
+        .cta-btn-secondary:hover {
+          background: linear-gradient(135deg, rgba(0,255,198,0.1), rgba(0,255,198,0.04)); border-color: rgba(0,255,198,0.4);
+        }
 
         @media (max-width: 1100px) {
           .values-grid { grid-template-columns:repeat(2,1fr) !important; }
@@ -236,13 +301,13 @@ export default function About() {
           .hero-split { flex-direction:column !important; gap:32px !important; }
           .mission-panel { width:100% !important; }
           .methodology-split { flex-direction:column !important; gap:40px !important; }
-          .cta-panel { width:100% !important; position:static !important; }
+          .cta-panel { width:100% !important; position:static !important; margin-top: 24px; }
         }
         @media (max-width: 660px) {
           .values-grid, .stats-row { grid-template-columns:1fr !important; }
           .desktop-nav { display:none !important; }
           #hamburger { display:flex !important; }
-          .hero-split { padding-top: 90px !important; }
+          .hero-split { padding-top: 110px !important; } /* Extra padding for mobile header */
         }
 
         ::-webkit-scrollbar { width:3px; }
@@ -274,7 +339,7 @@ export default function About() {
           transition: "background 0.4s",
           boxShadow: scrolled ? "0 4px 30px rgba(0,0,0,0.4)" : "none",
         }}>
-          <a href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 9 }}>
+          <Link to="/" onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 9 }}>
             <div style={{ width: 30, height: 30, background: "linear-gradient(135deg, rgba(108,43,217,0.3), rgba(0,255,198,0.15))", border: "1px solid rgba(108,43,217,0.4)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>
               <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
                 <polygon points="16,2 29,9 29,23 16,30 3,23 3,9" fill="none" stroke="#6C2BD9" strokeWidth="1.8"/>
@@ -282,11 +347,11 @@ export default function About() {
               </svg>
             </div>
             <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 15, fontWeight: 900, letterSpacing: "0.05em", color: "#E9E6FF" }}>Q<span style={{ color: "#00FFC6" }}>RYP</span>TEX</span>
-          </a>
+          </Link>
 
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 32 }}>
             {NAV_LINKS.map((l) => (
-              <a key={l.label} href={l.href} className={`nav-link${l.href === "/about" ? " active" : ""}`}>{l.label}</a>
+              <Link key={l.label} to={l.href} className={`nav-link${l.href.includes("/about") ? " active" : ""}`}>{l.label}</Link>
             ))}
           </div>
 
@@ -297,10 +362,11 @@ export default function About() {
           </button>
         </nav>
 
+        {/* Mobile Navigation Menu */}
         {menuOpen && (
-          <div style={{ position: "fixed", top: 62, left: 0, right: 0, zIndex: 99, background: "rgba(5,3,13,0.96)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(108,43,217,0.18)", padding: "20px 6%", display: "flex", flexDirection: "column", gap: 18, animation: "fadeUp 0.2s ease both" }}>
+          <div style={{ position: "fixed", top: 62, left: 0, right: 0, zIndex: 99, background: "rgba(5,3,13,0.98)", backdropFilter: "blur(24px)", borderBottom: "1px solid rgba(108,43,217,0.18)", padding: "30px 6% 40px", display: "flex", flexDirection: "column", gap: 24, animation: "fadeUp 0.3s ease both", boxShadow: "0 20px 40px rgba(0,0,0,0.5)" }}>
             {NAV_LINKS.map((l) => (
-              <a key={l.label} href={l.href} className="nav-link" onClick={() => setMenuOpen(false)}>{l.label}</a>
+              <Link key={l.label} to={l.href} className="nav-link" onClick={() => setMenuOpen(false)} style={{ fontSize: "16px" }}>{l.label}</Link>
             ))}
           </div>
         )}
@@ -403,17 +469,14 @@ export default function About() {
                       </h3>
                       <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 14, lineHeight: 1.7, color: "rgba(161,161,194,0.75)", marginBottom: 32 }}>Stop patching legacy systems. Let's design a threat model that makes adversaries irrelevant. Start the conversation with our engineering team.</p>
                       
-                      <button onClick={() => window.location.href = "/contact"} style={{ width: "100%", padding: "16px 0", borderRadius: 10, marginBottom: 12, cursor: "pointer", background: "linear-gradient(135deg, #6C2BD9 0%, #4C1BA0 100%)", border: "1px solid rgba(139,92,246,0.5)", color: "#fff", fontFamily: "'Rajdhani', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", boxShadow: "0 8px 24px rgba(108,43,217,0.35), inset 0 1px 0 rgba(255,255,255,0.15)", transition: "all 0.3s ease" }}
-                        onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 12px 36px rgba(108,43,217,0.55), inset 0 1px 0 rgba(255,255,255,0.2)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 8px 24px rgba(108,43,217,0.35), inset 0 1px 0 rgba(255,255,255,0.15)"; e.currentTarget.style.transform = "translateY(0)"; }}>
+                      {/* Replaced window.location with native React Router links for SPA performance */}
+                      <Link to="/contact" className="cta-btn-primary">
                         Request Architecture Review
-                      </button>
-                      {/* Updated the button below to link to localhost */}
-                      <button onClick={() => window.location.href = "http://localhost:5173/services"} style={{ width: "100%", padding: "15px 0", borderRadius: 10, cursor: "pointer", background: "linear-gradient(135deg, rgba(0,255,198,0.06), rgba(0,255,198,0.02))", border: "1px solid rgba(0,255,198,0.2)", color: "#00FFC6", fontFamily: "'Rajdhani', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", backdropFilter: "blur(8px)", boxShadow: "inset 0 1px 0 rgba(0,255,198,0.1)", transition: "all 0.3s ease" }}
-                        onMouseEnter={e => { e.currentTarget.style.background = "linear-gradient(135deg, rgba(0,255,198,0.1), rgba(0,255,198,0.04))"; e.currentTarget.style.borderColor = "rgba(0,255,198,0.4)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = "linear-gradient(135deg, rgba(0,255,198,0.06), rgba(0,255,198,0.02))"; e.currentTarget.style.borderColor = "rgba(0,255,198,0.2)"; }}>
+                      </Link>
+                      
+                      <Link to="/#services" className="cta-btn-secondary">
                         Explore Services
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
