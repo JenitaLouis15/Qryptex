@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
@@ -12,6 +13,24 @@ import TermsOfService from "./pages/TermsOfService";
 import ComingSoon from "./pages/ComingSoon"; 
 
 function LandingPage() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      // Find the element by the hash id (removing the # symbol)
+      const element = document.getElementById(hash.replace("#", ""));
+      if (element) {
+        // A slight timeout ensures the DOM is fully painted before scrolling
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    } else {
+      // If there is no hash, ensure the page loads at the very top
+      window.scrollTo(0, 0);
+    }
+  }, [hash]);
+
   return (
     <main>
       <div id="hero"><Hero /></div>
