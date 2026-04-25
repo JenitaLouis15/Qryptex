@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// ── BACKGROUND EFFECT ────────────────────────────────────────────────────────
+// ── BACKGROUND EFFECT (Kept from original) ──────────────────────────────────
 function CyberAmbient() {
   const ref = useRef(null);
   useEffect(() => {
@@ -56,7 +56,7 @@ function CyberAmbient() {
   return <canvas ref={ref} style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }} />;
 }
 
-// ── IN-CARD PARTICLES EFFECT ─────────────────────────────────────────────────
+// ── IN-CARD PARTICLES EFFECT (Kept from original) ───────────────────────────
 function CardParticles({ active, accent }) {
   const ref = useRef(null);
   const pts = useRef([]);
@@ -124,7 +124,7 @@ function CardParticles({ active, accent }) {
   );
 }
 
-// ── INDIVIDUAL CARD COMPONENT ────────────────────────────────────────────────
+// ── INDIVIDUAL CARD COMPONENT (Updated Copy Focus) ──────────────────────────
 function CyberCard({ cap, index, loaded }) {
   const [hov, setHov] = useState(false);
 
@@ -137,19 +137,14 @@ function CyberCard({ cap, index, loaded }) {
         border: `1px solid rgba(${cap.accentRgb}, 0.2)`,
         opacity: loaded ? 1 : 0, 
         transform: loaded ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
-        // Provide CSS variables to handle the dynamic hover colors in the stylesheet
         '--hover-accent': cap.accent,
         '--hover-accent-alpha': `rgba(${cap.accentRgb}, 0.25)`,
-        transitionDelay: `${0.1 + (index * 0.1)}s, 0s, 0s` // Delay entrance, but immediate hover
+        transitionDelay: `${0.1 + (index * 0.1)}s, 0s, 0s` 
       }}
     >
-      {/* Accent bar at top */}
       <div className="accent-bar" />
-
-      {/* Floating Particles Inside Card */}
       <CardParticles active={hov} accent={cap.accent} />
       
-      {/* Content wrapper with z-index to sit above particles */}
       <div style={{ position: "relative", zIndex: 2 }}>
         <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: cap.accent, letterSpacing: "0.15em", marginBottom: 16 }}>
           {cap.subtitle.toUpperCase()}
@@ -159,7 +154,7 @@ function CyberCard({ cap, index, loaded }) {
           {cap.title}
         </h2>
         
-        <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "15px", lineHeight: 1.6, color: "var(--text-secondary, #A1A1C2)", marginBottom: 30 }}>
+        <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "15px", lineHeight: 1.6, color: "var(--text-secondary, #A1A1C2)", marginBottom: 30, minHeight: "48px" }}>
           {cap.tagline}
         </p>
 
@@ -187,74 +182,74 @@ function CyberCard({ cap, index, loaded }) {
   );
 }
 
-// ── SERVICE DATA ─────────────────────────────────────────────────────────────
+// ── REVISED SERVICE DATA (Shifted to Business Value & Outcomes) ─────────────
 const CAPABILITIES = [
   {
     id: "risk-ai",
-    title: "Cognitive Risk & Fraud Intelligence",
-    subtitle: "AI-Driven Anomaly Detection",
-    tagline: "Context-aware hybrid risk analysis systems that eliminate noise and scale infinitely.",
+    title: "Fraud & Risk Intelligence",
+    subtitle: "Protect Your Revenue",
+    tagline: "Stop financial losses before they happen with AI that detects anomalies in real-time.",
     accent: "#00FFC6",
     accentRgb: "0,255,198",
     stats: [
-      { label: "Throughput", value: "100k+ TPS" },
-      { label: "False Positives", value: "-92%" }
+      { label: "Alert Accuracy", value: "99.9%" },
+      { label: "False Positives", value: "Reduced 92%" }
     ],
     points: [
-      "Hybrid AI and rule-based anomaly detection for transactional data.",
-      "Context-aware calibration that drastically reduces alert fatigue without suppressing high-risk signals.",
-      "Explainable risk scoring with real-time investigation workflows."
+      "Instantly identify fraudulent transactions without slowing down legitimate customer payments.",
+      "Eliminate manual review fatigue—our AI flags only the threats that matter.",
+      "Clear, actionable risk scoring allows your team to act decisively within seconds."
     ]
   },
   {
     id: "quantum-crypto",
-    title: "Post-Quantum Cryptographic Architecture",
-    subtitle: "Deterministic Consensus Systems",
-    tagline: "Decentralized state machines hardened against the cryptographic threats of tomorrow.",
+    title: "Future-Proof Infrastructure",
+    subtitle: "Absolute Data Integrity",
+    tagline: "Ensure your most sensitive enterprise data remains secure for decades.",
     accent: "#A78BFA",
     accentRgb: "167,139,250",
     stats: [
-      { label: "Encryption", value: "Dilithium PQC" },
-      { label: "Architecture", value: "BFT Consensus" }
+      { label: "Encryption Standard", value: "Quantum-Safe" },
+      { label: "Data Immutability", value: "Guaranteed" }
     ],
     points: [
-      "Lattice-based quantum encryption (Dilithium) combined with SHA3-256 for future-proof security.",
-      "Full-stack observability of block construction, transactions, and validator activity.",
-      "Deterministic state transitions preventing replay attacks and consensus divergence."
+      "Transition your business to Post-Quantum Cryptography ahead of emerging global threats.",
+      "Deploy decentralized ledgers to guarantee operational transparency and prevent internal tampering.",
+      "Ensure regulatory compliance for the next decade of data security laws."
     ]
   },
   {
     id: "app-sec",
-    title: "Offensive Security & Penetration Testing",
-    subtitle: "Proactive Perimeter Hardening",
-    tagline: "Deep-dive exploitation, SIEM integration, and granular packet-level analysis.",
+    title: "Proactive Vulnerability Testing",
+    subtitle: "Stop Breaches Early",
+    tagline: "We find and fix the fatal flaws in your network before attackers can exploit them.",
     accent: "#8B5CF6",
     accentRgb: "139,92,246",
     stats: [
-      { label: "Analysis", value: "Deep PCAP" },
-      { label: "Coverage", value: "Full-Stack" }
+      { label: "Testing Scope", value: "Full-Stack" },
+      { label: "Exploit Prevention", value: "Zero-Day" }
     ],
     points: [
-      "Advanced exploitation modeling (Injection, Auth Bypass, Logic Flaws, Client-Side Attacks).",
-      "Detection engineering, SIEM correlation, and rigorous PCAP behavioral analysis.",
-      "Comprehensive system hardening supported by actionable, SOC-ready vulnerability reports."
+      "Simulate real-world cyber attacks on your apps to identify critical business logic flaws.",
+      "Receive SOC-ready remediation blueprints, not just automated PDF scans.",
+      "Harden your perimeter to protect client data and maintain brand reputation."
     ]
   },
   {
     id: "secure-apps",
-    title: "Secure Enterprise FinTech Solutions",
-    subtitle: "Scalable Web & Mobile Architectures",
-    tagline: "High-performance applications built with bank-grade security and zero-trust principles.",
+    title: "Secure Custom Platforms",
+    subtitle: "Scale With Confidence",
+    tagline: "High-performance Web & Mobile applications built with bank-grade security from day one.",
     accent: "#6C2BD9",
     accentRgb: "108,43,217",
     stats: [
-      { label: "Payments", value: "Encrypted" },
-      { label: "Ecosystem", value: "Edge-Native" }
+      { label: "Architecture", value: "Zero-Trust" },
+      { label: "Deployment", value: "Edge-Native" }
     ],
     points: [
-      "End-to-end encrypted mobile and web application development.",
-      "Highly secure payment gateway integration (Razorpay) with strict authorization protocols.",
-      "Business logic flaw prevention and API misuse protection built directly into the architecture."
+      "Launch proprietary FinTech and enterprise apps without fearing data leaks.",
+      "End-to-end encrypted infrastructure ensures user data is never exposed in transit.",
+      "Seamless integration with enterprise payment gateways and legacy systems."
     ]
   }
 ];
@@ -272,16 +267,14 @@ export default function Cybersec() {
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-deep, #05030D)", position: "relative", overflowX: "hidden", color: "var(--text-primary, #E9E6FF)" }}>
       
-      {/* Dynamic Scoped CSS for Animations, Responsiveness, and Ultra-Slim Scrollbar */}
+      {/* Dynamic Scoped CSS */}
       <style>{`
-        /* ── Ultra-Slim Purple Scrollbar ── */
         html { scrollbar-color: rgba(108,43,217,0.8) transparent; scrollbar-width: thin; }
-        ::-webkit-scrollbar { width: 2px; } /* Razor thin */
-        ::-webkit-scrollbar-track { background: transparent; } /* Transparent track removes bulk */
+        ::-webkit-scrollbar { width: 2px; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(108,43,217,0.8); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #8B5CF6; }
 
-        /* ── Grid & Card Styles ── */
         .capabilities-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -300,6 +293,8 @@ export default function Cybersec() {
                       box-shadow 0.4s ease, 
                       border-color 0.4s ease;
           cursor: default;
+          display: flex;
+          flex-direction: column;
         }
 
         .cyber-card:hover {
@@ -350,21 +345,36 @@ export default function Cybersec() {
           box-shadow: 0 0 12px var(--hover-accent);
         }
 
-        /* ── Responsive Breakpoints ── */
+        /* CTA Button Hover Effect */
+        .cta-button {
+          background: rgba(0, 255, 198, 0.1);
+          border: 1px solid #00FFC6;
+          color: #00FFC6;
+          padding: 16px 32px;
+          font-family: 'Orbitron', sans-serif;
+          font-weight: 700;
+          font-size: 16px;
+          letter-spacing: 0.1em;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 0 15px rgba(0, 255, 198, 0.2);
+          text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+          background: #00FFC6;
+          color: #05030D;
+          box-shadow: 0 0 30px rgba(0, 255, 198, 0.6);
+          transform: translateY(-2px);
+        }
+
         @media (max-width: 768px) {
-          .capabilities-grid {
-            grid-template-columns: 1fr;
-            gap: 20px;
-          }
-          .cyber-card {
-            padding: 30px 20px;
-          }
-          .hero-title {
-            font-size: clamp(28px, 8vw, 42px) !important;
-          }
-          .hero-subtitle {
-            font-size: 15px !important;
-          }
+          .capabilities-grid { grid-template-columns: 1fr; gap: 20px; }
+          .cyber-card { padding: 30px 20px; }
+          .hero-title { font-size: clamp(28px, 8vw, 42px) !important; }
+          .hero-subtitle { font-size: 15px !important; }
+          .cta-container { padding: 40px 20px !important; }
         }
       `}</style>
 
@@ -387,19 +397,19 @@ export default function Cybersec() {
         </button>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "20px 5% 100px", position: "relative", zIndex: 2 }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "20px 5% 60px", position: "relative", zIndex: 2 }}>
         
-        {/* Header Section */}
+        {/* Outcome-Focused Header Section */}
         <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)", marginBottom: "clamp(40px, 8vw, 60px)" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 2, border: "1px solid rgba(167,139,250,0.3)", background: "rgba(167,139,250,0.05)", marginBottom: 24 }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.16em", color: "#A78BFA" }}>// CORE SERVICES · QRYPTEX</span>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.16em", color: "#A78BFA" }}>// SECURE YOUR FUTURE · QRYPTEX</span>
           </div>
           <h1 className="hero-title" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(32px, 5vw, 58px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
-            ENTERPRISE SECURITY <br/>
-            <span style={{ color: "var(--accent-green, #00FFC6)" }}>& THREAT ARCHITECTURE.</span>
+            PROTECT YOUR REVENUE. <br/>
+            <span style={{ color: "var(--accent-green, #00FFC6)" }}>OUTPACE THE THREATS.</span>
           </h1>
           <p className="hero-subtitle" style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "16px", lineHeight: 1.8, color: "var(--text-secondary, #A1A1C2)", maxWidth: 650 }}>
-            We engineer systems that outpace adversaries. From hybrid AI risk analysis processing millions of transactions, to quantum-safe blockchains and deep-dive offensive security operations—we build the infrastructure businesses trust when failure is not an option.
+            We engineer the systems businesses trust when failure is not an option. By fusing cognitive AI, zero-trust architecture, and post-quantum encryption, we ensure your operations run flawlessly and your enterprise data remains impenetrable.
           </p>
         </div>
 
@@ -408,6 +418,38 @@ export default function Cybersec() {
           {CAPABILITIES.map((cap, index) => (
             <CyberCard key={cap.id} cap={cap} index={index} loaded={loaded} />
           ))}
+        </div>
+
+        {/* NEW: High Conversion Call-To-Action Section */}
+        <div 
+          className="cta-container"
+          style={{ 
+            opacity: loaded ? 1 : 0, 
+            transform: loaded ? "translateY(0)" : "translateY(30px)", 
+            transition: "all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s",
+            background: "linear-gradient(180deg, rgba(8, 5, 20, 0) 0%, rgba(108, 43, 217, 0.1) 100%)",
+            border: "1px solid rgba(108, 43, 217, 0.3)",
+            borderRadius: "8px",
+            padding: "60px 40px",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden"
+          }}
+        >
+          {/* Subtle glow behind CTA */}
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "100%", height: "100%", background: "radial-gradient(circle, rgba(108,43,217,0.15) 0%, transparent 60%)", pointerEvents: "none", zIndex: 0 }} />
+          
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <h3 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(24px, 3vw, 32px)", fontWeight: 700, marginBottom: "16px", color: "#FFF" }}>
+              Ready to Fortify Your Infrastructure?
+            </h3>
+            <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "16px", color: "var(--text-secondary, #A1A1C2)", maxWidth: "600px", margin: "0 auto 30px auto", lineHeight: 1.6 }}>
+              Stop leaving your security to chance. Partner with Qryptex to design an architecture that scales infinitely and protects aggressively. 
+            </p>
+            <button className="cta-button" onClick={() => navigate('/contact')}>
+              REQUEST SECURITY AUDIT
+            </button>
+          </div>
         </div>
 
       </div>

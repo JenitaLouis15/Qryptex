@@ -48,18 +48,18 @@ const PILLS = [
 const CARDS = [
   { 
     icon: <IconShield />, 
-    title: "Post-Quantum Core", 
-    desc: "Future-proof encryption algorithms guarding against next-gen quantum decryption attacks." 
+    title: "Future-Proof Data", 
+    desc: "Quantum-safe encryption to protect your most sensitive assets against tomorrow’s threats." 
   },
   { 
     icon: <IconNetwork />, 
-    title: "Zero-Trust Network", 
-    desc: "Immutable, decentralized architecture demanding continuous verification at every node." 
+    title: "Absolute Integrity", 
+    desc: "A decentralized, zero-trust infrastructure where every interaction is verified, never assumed." 
   },
   { 
     icon: <IconCore />, 
-    title: "Autonomous Defense", 
-    desc: "Predictive cognitive AI systems that hunt and neutralize anomalies in real-time." 
+    title: "Proactive Security", 
+    desc: "AI-driven autonomous systems that actively hunt and neutralize risks in real-time." 
   },
 ];
 
