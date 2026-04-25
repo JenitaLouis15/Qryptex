@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom"; 
 
-// Updated Navigation Links
+// ── NAVIGATION LINKS ────────────────────────────────────────────────────────
 const NAV_LINKS = [
   { label: "Home",       href: "/#hero"      }, 
   { label: "Services",   href: "/#services"  }, 
@@ -9,10 +9,11 @@ const NAV_LINKS = [
   { label: "Contact",    href: "/contact"    }, 
 ];
 
-// Removed Blockchain and Quantum. Re-indexed to 01, 02, 03
+// ── CORE SERVICES DATA ──────────────────────────────────────────────────────
 const SERVICES = [
   {
     id: "cybersec",
+    path: "/cybersec", // Routes to actual service page
     index: "01",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -35,6 +36,7 @@ const SERVICES = [
   },
   {
     id: "ai",
+    path: "/coming-soon", // Re-routed to coming soon
     index: "02",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -67,6 +69,7 @@ const SERVICES = [
   },
   {
     id: "fullstack",
+    path: "/coming-soon", // Re-routed to coming soon
     index: "03",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -91,6 +94,7 @@ const SERVICES = [
   },
 ];
 
+// ── HIGHLIGHTS DATA ─────────────────────────────────────────────────────────
 const HIGHLIGHTS = [
   {
     icon: (
@@ -149,6 +153,7 @@ const HIGHLIGHTS = [
   },
 ];
 
+// ── BACKGROUND CANVAS EFFECTS ───────────────────────────────────────────────
 function AmbientCanvas() {
   const ref = useRef(null);
   useEffect(() => {
@@ -287,6 +292,7 @@ function CardParticles({ accent, active }) {
   return <canvas ref={ref} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", borderRadius: 4 }} />;
 }
 
+// ── COMPONENT CARDS ─────────────────────────────────────────────────────────
 function ServiceCard({ svc, index }) {
   const [hov, setHov] = useState(false);
   const [vis, setVis] = useState(false);
@@ -304,15 +310,16 @@ function ServiceCard({ svc, index }) {
       ref={ref}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
-      onClick={() => navigate(`/${svc.id}`)}
+      // Updated onClick logic here
+      onClick={() => navigate(svc.path || `/${svc.id}`)}
       style={{
         position: "relative", cursor: "pointer", borderRadius: 4,
         border: `1px solid ${hov ? `rgba(${svc.accentRgb},0.48)` : "rgba(108,43,217,0.17)"}`,
-        background: hov ? `linear-gradient(145deg, rgba(${svc.accentRgb},0.07) 0%, rgba(5,3,13,0.96) 55%)` : "rgba(8,5,20,0.82)",
-        backdropFilter: "blur(12px)",
+        background: hov ? `linear-gradient(145deg, rgba(${svc.accentRgb},0.07) 0%, rgba(5,3,13,0.96) 55%)` : "rgba(8,5,20,0.65)",
+        backdropFilter: "blur(16px)", // Enhanced glassmorphism
         boxShadow: hov ? `0 0 0 1px rgba(${svc.accentRgb},0.12), 0 24px 60px rgba(${svc.accentRgb},0.13), 0 6px 24px rgba(0,0,0,0.5)` : "0 2px 14px rgba(0,0,0,0.3)",
         transform: hov ? "translateY(-7px) scale(1.012)" : "translateY(0) scale(1)",
-        transition: "all 0.42s cubic-bezier(0.34,1.4,0.64,1)",
+        transition: "all 0.42s cubic-bezier(0.16, 1, 0.3, 1)",
         opacity: vis ? 1 : 0,
         animation: vis ? `cardReveal 0.7s cubic-bezier(0.34,1.4,0.64,1) ${index * 0.1}s both` : "none",
         overflow: "hidden", padding: "36px 30px 30px",
@@ -321,7 +328,7 @@ function ServiceCard({ svc, index }) {
       <CardParticles accent={svc.accent} active={hov} />
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: hov ? `linear-gradient(90deg, transparent, ${svc.accent} 50%, transparent)` : "transparent", transition: "background 0.5s", zIndex: 2 }} />
       <div style={{ position: "absolute", top: 14, right: 14, width: 7, height: 7, borderRadius: "50%", background: hov ? svc.accent : "rgba(108,43,217,0.28)", boxShadow: hov ? `0 0 12px ${svc.accent}, 0 0 24px rgba(${svc.accentRgb},0.3)` : "none", transition: "all 0.4s", zIndex: 2 }} />
-      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.2em", color: hov ? `rgba(${svc.accentRgb},0.65)` : "rgba(108,43,217,0.28)", marginBottom: 22, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{`// ${svc.index}`}</div>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.2em", color: hov ? `rgba(${svc.accentRgb},0.65)` : "rgba(108,43,217,0.28)", marginBottom: 22, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{`// ${svc.index} — SYS.ONLINE`}</div>
       <div style={{ color: hov ? svc.accent : "rgba(161,161,194,0.55)", marginBottom: 20, display: "inline-block", transition: "color 0.35s, transform 0.45s cubic-bezier(0.34,1.4,0.64,1), filter 0.35s", transform: hov ? "scale(1.18) rotate(-4deg)" : "scale(1) rotate(0deg)", filter: hov ? `drop-shadow(0 0 10px rgba(${svc.accentRgb},0.7))` : "none", position: "relative", zIndex: 2 }}>{svc.icon}</div>
       <div style={{ marginBottom: 14, position: "relative", zIndex: 2 }}>
         <h3 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(14px,1.35vw,17px)", fontWeight: 900, color: "var(--text-primary)", letterSpacing: "0.04em", lineHeight: 1.1, margin: "0 0 3px" }}>{svc.title}</h3>
@@ -339,14 +346,13 @@ function ServiceCard({ svc, index }) {
       </ul>
       <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, letterSpacing: "0.1em", color: hov ? `rgba(${svc.accentRgb},0.55)` : "rgba(108,43,217,0.22)", marginBottom: 20, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{svc.stack}</div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Rajdhani', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: hov ? svc.accent : "transparent", transition: "color 0.3s, transform 0.35s", transform: hov ? "translateX(7px)" : "translateX(0)", position: "relative", zIndex: 2 }}>
-        <span>Explore Service</span>
+        <span>{svc.id === 'cybersec' ? 'Explore Service' : 'Coming Soon'}</span>
         <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h14M10 1l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
       </div>
     </div>
   );
 }
 
-// ── REDESIGNED FULL-WIDTH CUSTOM CELL ─────────────────────────────────────────
 function CustomCell() {
   const [hov, setHov] = useState(false);
   const [vis, setVis] = useState(false);
@@ -420,7 +426,6 @@ function CustomCell() {
   );
 }
 
-// ── UPGRADED PAGE HEADER (Marketing Focus) ───────────────────────────────────
 function PageHeader() {
   const [vis, setVis] = useState(false);
   const ref = useRef(null);
@@ -434,20 +439,14 @@ function PageHeader() {
 
   return (
     <div ref={ref} style={{ maxWidth: 1160, margin: "0 auto", padding: "120px 5% 80px", position: "relative", zIndex: 2 }}>
-      
-      {/* Subtle Glow Behind Header */}
       <div style={{ position: "absolute", top: "10%", left: "10%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(0,255,198,0.06) 0%, transparent 70%)", filter: "blur(50px)", zIndex: -1, pointerEvents: "none" }} />
-
       <div style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "6px 16px", borderRadius: 2, border: "1px solid rgba(0,255,198,0.2)", background: "rgba(0,255,198,0.04)", marginBottom: 30, opacity: vis ? 1 : 0, animation: vis ? "fadeIn 0.5s ease both" : "none" }}>
         <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent-green)", boxShadow: "0 0 8px var(--accent-green)", animation: "blip 2s infinite" }} />
         <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.2em", color: "var(--accent-green)", fontWeight: 700 }}>INFRASTRUCTURE AS A COMPETITIVE ADVANTAGE</span>
       </div>
-
       <h1 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(36px, 6vw, 84px)", fontWeight: 900, lineHeight: 1.05, color: "var(--text-primary)", letterSpacing: "-0.01em", marginBottom: 8, opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.08s both" : "none" }}>
         FUTURE-PROOF
       </h1>
-      
-      {/* Gradient Animated Text */}
       <h1 style={{ 
         fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(36px, 6vw, 84px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.01em", marginBottom: 32, 
         background: "linear-gradient(90deg, #6C2BD9 0%, #A78BFA 45%, #00FFC6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", 
@@ -455,38 +454,22 @@ function PageHeader() {
       }}>
         YOUR ENTERPRISE.
       </h1>
-
       <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", lineHeight: 1.75, color: "var(--text-secondary)", maxWidth: 680, marginBottom: 50, opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.24s both" : "none" }}>
         Stop bolting on legacy solutions. We engineer cohesive, quantum-safe, AI-driven ecosystems designed to accelerate your growth and neutralize threats before they exist. Partner with QRYPTEX to build systems that scale infinitely.
       </p>
-
-      {/* Action Buttons */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginBottom: "60px", opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.32s both" : "none" }}>
-        <button 
-          className="header-primary-btn"
-          onClick={() => navigate('/contact')}
-        >
+        <button className="header-primary-btn" onClick={() => navigate('/contact')}>
           INITIALIZE PROJECT
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </button>
-        <button 
-          className="header-secondary-btn"
-          onClick={() => document.getElementById('services-grid').scrollIntoView({ behavior: 'smooth' })}
-        >
+        <button className="header-secondary-btn" onClick={() => document.getElementById('services-grid').scrollIntoView({ behavior: 'smooth' })}>
           EXPLORE CAPABILITIES
         </button>
       </div>
-
-      {/* Glossy Stats Bar */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: 0, opacity: vis ? 1 : 0, animation: vis ? "fadeUp 0.65s ease 0.4s both" : "none", border: "1px solid rgba(108,43,217,0.2)", borderRadius: "4px", overflow: "hidden", background: "rgba(5,3,13,0.5)", backdropFilter: "blur(10px)" }}>
-        {[
-          ["Full-Stack", "End-To-End Coverage"], 
-          ["Military-Grade", "Zero-Trust Architecture"], 
-          ["Enterprise SLA", "99.99% Guaranteed Uptime"], 
-          ["Unified Stack", "Seamless Integration"]
-        ].map(([n, l], i) => (
+        {[["Full-Stack", "End-To-End Coverage"], ["Military-Grade", "Zero-Trust Architecture"], ["Enterprise SLA", "99.99% Guaranteed Uptime"], ["Unified Stack", "Seamless Integration"]].map(([n, l], i) => (
           <div key={l} style={{ flex: "1 1 200px", padding: "20px 24px", borderRight: i !== 3 ? "1px solid rgba(108,43,217,0.2)" : "none", borderBottom: "none", background: "rgba(108,43,217,0.03)" }}>
             <div style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(15px, 1.8vw, 18px)", fontWeight: 700, color: "var(--accent-green)", marginBottom: 4 }}>{n}</div>
             <div style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 11, fontWeight: 600, color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.15em" }}>{l}</div>
@@ -533,6 +516,7 @@ function HighlightCard({ h, index }) {
   );
 }
 
+// ── MAIN EXPORT ─────────────────────────────────────────────────────────────
 export default function Services() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -546,7 +530,7 @@ export default function Services() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
           --purple-primary:   #6C2BD9;
@@ -570,7 +554,6 @@ export default function Services() {
         @keyframes barPulse { 0%,100%{opacity:0.35;transform:scaleY(0.85)} 50%{opacity:1;transform:scaleY(1)} }
         @keyframes textShimmer { to { background-position: 200% center; } } 
 
-        /* ── HEADER BUTTON STYLES ── */
         .header-primary-btn {
           background: rgba(0, 255, 198, 0.1);
           border: 1px solid var(--accent-green);
@@ -624,29 +607,15 @@ export default function Services() {
         .nav-link:hover  { color:var(--text-primary); }
         .nav-link:hover::after, .nav-link.active::after { width:100%; }
 
-        .svc-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 22px;
-        }
-        .hi-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 20px;
-        }
+        .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+        .hi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 
-        /* ── MOBILE RESPONSIVE ── */
         @media (max-width: 1100px) {
           .svc-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .hi-grid  { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 768px) {
-          .custom-cell-wrapper {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            padding: 30px !important;
-            gap: 24px !important;
-          }
+          .custom-cell-wrapper { flex-direction: column !important; align-items: flex-start !important; padding: 30px !important; gap: 24px !important; }
         }
         @media (max-width: 660px) {
           .svc-grid, .hi-grid { grid-template-columns: 1fr !important; }
@@ -716,7 +685,6 @@ export default function Services() {
         )}
 
         <div style={{ position: "relative", zIndex: 2 }}>
-
           <div style={{ borderBottom: "1px solid rgba(108,43,217,0.1)", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", right: "3%", top: "50%", transform: "translateY(-50%)", width: 300, height: 300, opacity: 0.055, animation: "rotateSlow 32s linear infinite", pointerEvents: "none" }}>
               <svg viewBox="0 0 300 300" fill="none">
@@ -738,12 +706,10 @@ export default function Services() {
               <div style={{ height: 1, flex: 1, background: "rgba(108,43,217,0.18)" }} />
             </div>
             
-            {/* The 3 Core Services in the Grid */}
             <div className="svc-grid">
               {SERVICES.map((svc, i) => <ServiceCard key={svc.id} svc={svc} index={i} />)}
             </div>
 
-            {/* The New Full-Width Custom Cell placed below the grid */}
             <CustomCell />
           </div>
 
@@ -765,7 +731,7 @@ export default function Services() {
           </div>
 
           <div style={{ padding: "20px 5%", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: "rgba(161,161,194,0.22)", letterSpacing: "0.1em" }}>© 2026 QRYPTEX — ALL SYSTEMS OPERATIONAL</span>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: "rgba(161,161,194,0.4)", letterSpacing: "0.1em" }}>© 2026 QRYPTEX // STATUS: ONLINE</span>
             <div style={{ display: "flex", gap: 4, alignItems: "flex-end" }}>
               {[7, 11, 15, 9, 5].map((h, i) => (
                 <div key={i} style={{ width: 3, height: h, borderRadius: 1, background: `rgba(108,43,217,${0.28 + i * 0.1})`, animation: `barPulse ${1.2 + i * 0.28}s ease-in-out infinite`, animationDelay: `${i * 0.13}s` }} />
