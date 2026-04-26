@@ -36,7 +36,7 @@ const SERVICES = [
   },
   {
     id: "ai",
-    path: "/coming-soon", // Re-routed to coming soon
+    path: "/ai", // Updated link to AI service page
     index: "02",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -69,7 +69,7 @@ const SERVICES = [
   },
   {
     id: "fullstack",
-    path: "/coming-soon", // Re-routed to coming soon
+    path: "/fullstack", // Updated link to Full Stack service page
     index: "03",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -346,7 +346,8 @@ function ServiceCard({ svc, index }) {
       </ul>
       <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, letterSpacing: "0.1em", color: hov ? `rgba(${svc.accentRgb},0.55)` : "rgba(108,43,217,0.22)", marginBottom: 20, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{svc.stack}</div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Rajdhani', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: hov ? svc.accent : "transparent", transition: "color 0.3s, transform 0.35s", transform: hov ? "translateX(7px)" : "translateX(0)", position: "relative", zIndex: 2 }}>
-        <span>{svc.id === 'cybersec' ? 'Explore Service' : 'Coming Soon'}</span>
+        {/* Removed 'Coming Soon' conditional text here */}
+        <span>Explore Service</span>
         <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h14M10 1l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
       </div>
     </div>
