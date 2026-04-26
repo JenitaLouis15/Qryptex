@@ -329,7 +329,21 @@ function ServiceCard({ svc, index }) {
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: hov ? `linear-gradient(90deg, transparent, ${svc.accent} 50%, transparent)` : "transparent", transition: "background 0.5s", zIndex: 2 }} />
       <div style={{ position: "absolute", top: 14, right: 14, width: 7, height: 7, borderRadius: "50%", background: hov ? svc.accent : "rgba(108,43,217,0.28)", boxShadow: hov ? `0 0 12px ${svc.accent}, 0 0 24px rgba(${svc.accentRgb},0.3)` : "none", transition: "all 0.4s", zIndex: 2 }} />
       <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.2em", color: hov ? `rgba(${svc.accentRgb},0.65)` : "rgba(108,43,217,0.28)", marginBottom: 22, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{`// ${svc.index} — SYS.ONLINE`}</div>
-      <div style={{ color: hov ? svc.accent : "rgba(161,161,194,0.55)", marginBottom: 20, display: "inline-block", transition: "color 0.35s, transform 0.45s cubic-bezier(0.34,1.4,0.64,1), filter 0.35s", transform: hov ? "scale(1.18) rotate(-4deg)" : "scale(1) rotate(0deg)", filter: hov ? `drop-shadow(0 0 10px rgba(${svc.accentRgb},0.7))` : "none", position: "relative", zIndex: 2 }}>{svc.icon}</div>
+      
+      {/* SMOOTHED ICON ANIMATION */}
+      <div style={{ 
+        color: hov ? svc.accent : "rgba(161,161,194,0.55)", 
+        marginBottom: 20, 
+        display: "inline-block", 
+        transition: "color 0.4s ease, transform 0.4s ease, filter 0.4s ease", 
+        transform: hov ? "scale(1.05) translateY(-3px)" : "scale(1) translateY(0)", 
+        filter: hov ? `drop-shadow(0 0 10px rgba(${svc.accentRgb},0.6))` : "none", 
+        position: "relative", 
+        zIndex: 2 
+      }}>
+        {svc.icon}
+      </div>
+
       <div style={{ marginBottom: 14, position: "relative", zIndex: 2 }}>
         <h3 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(14px,1.35vw,17px)", fontWeight: 900, color: "var(--text-primary)", letterSpacing: "0.04em", lineHeight: 1.1, margin: "0 0 3px" }}>{svc.title}</h3>
         <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(11px,1vw,13px)", fontWeight: 400, color: hov ? svc.accent : "var(--text-secondary)", letterSpacing: "0.09em", transition: "color 0.3s" }}>{svc.subtitle}</span>
