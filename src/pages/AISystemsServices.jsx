@@ -184,74 +184,74 @@ function CyberCard({ cap, index, loaded }) {
   );
 }
 
-// ── AI & INTELLIGENT SYSTEMS DATA ───────────────────────────────────────────
+// ── ML & INTELLIGENT SYSTEMS DATA ───────────────────────────────────────────
 const AI_CAPABILITIES = [
   {
-    id: "rag-llms",
-    title: "Custom LLMs & RAG Pipelines",
-    subtitle: "Enterprise Knowledge Base",
-    tagline: "Chatbots and search systems that actually understand your proprietary data securely.",
-    accent: "#A78BFA",
-    accentRgb: "167,139,250",
+    id: "fraud-anomaly",
+    title: "Hybrid Anomaly Detection",
+    subtitle: "Trade & Risk Intelligence",
+    tagline: "Unsupervised machine learning fused with strict rule engines to identify suspicious behavior and financial fraud.",
+    accent: "#FF3366", // Red/Pink for high-alert detection
+    accentRgb: "255,51,102",
     stats: [
-      { label: "Retrieval Speed", value: "< 200ms" },
-      { label: "Hallucinations", value: "Near Zero" }
+      { label: "Target Recall", value: "~99%" },
+      { label: "False Positives", value: "-92% Reduced" }
     ],
     points: [
-      "Retrieval-Augmented Generation (RAG) grounds AI answers exclusively in your company documents.",
-      "Automate tier-1 customer support with intelligent agents that converse naturally.",
-      "100% private deployment—your sensitive data never trains public models."
+      "Deploy Isolation Forest models to detect behavioral outliers in high-dimensional datasets.",
+      "Context-aware calibration pipelines that recover precision without suppressing critical alerts.",
+      "Explainable risk scoring combining AI signals and compliance rules for fast, clear investigation workflows."
     ]
   },
   {
-    id: "predictive-ai",
-    title: "Predictive Analytics",
-    subtitle: "Anticipate the Market",
-    tagline: "Turn historical data into highly accurate forecasts for sales, inventory, and behavior.",
-    accent: "#FF3366",
-    accentRgb: "255,51,102",
+    id: "log-analysis",
+    title: "Automated Log Analysis",
+    subtitle: "Proactive Threat Defense",
+    tagline: "Transform mountains of raw server and network logs into actionable security intelligence in real-time.",
+    accent: "#A78BFA", // Violet
+    accentRgb: "167,139,250",
     stats: [
-      { label: "Forecast Accuracy", value: "94%+" },
-      { label: "Processing", value: "Real-Time" }
+      { label: "Processing", value: "Real-Time" },
+      { label: "Alert Latency", value: "< 1s" }
     ],
     points: [
-      "Deploy machine learning models that predict customer churn before it happens.",
-      "Dynamic pricing algorithms that automatically adjust to market demand and competitor pricing.",
-      "Supply chain optimization to reduce overhead and prevent stockouts."
+      "Behavioral analysis models that spot network intrusions and lateral movement traditional SIEMs miss.",
+      "Automated signal correlation to group disparate log events into coherent threat narratives.",
+      "Direct integration with existing SOC dashboards, alerting pipelines, and incident response tools."
     ]
   },
   {
     id: "computer-vision",
-    title: "Computer Vision Systems",
-    subtitle: "Perception at Scale",
-    tagline: "Enable your software to 'see' and analyze visual data faster than humanly possible.",
-    accent: "#00FFCC",
+    title: "Real-Time Video Analytics",
+    subtitle: "CCTV Perception",
+    tagline: "Turn passive camera feeds into active security monitors with low-latency computer vision models.",
+    accent: "#00FFCC", // Cyan
     accentRgb: "0,255,204",
     stats: [
       { label: "Inference", value: "60fps+" },
-      { label: "Detection Rate", value: "99.8%" }
+      { label: "Architecture", value: "Edge-Optimized" }
     ],
     points: [
-      "Automated quality control for manufacturing, catching defects on the assembly line.",
-      "Facial recognition and secure biometric identity verification for FinTech applications.",
-      "Geospatial data analysis using satellite imagery for agriculture and real estate."
+      "Live object detection, perimeter breach alerts, and tracking using optimized neural networks.",
+      "Secure facial recognition capabilities for biometric identity verification in restricted zones.",
+      "Automated behavioral flagging for safety compliance violations, unauthorized access, or loitering."
     ]
   },
   {
-    id: "autonomous-agents",
-    title: "Autonomous Workflows",
-    subtitle: "Self-Driving Operations",
-    tagline: "Deploy multi-agent systems that execute complex, multi-step tasks without human intervention.",
-    accent: "#FF9900",
-    accentRgb: "255,153,0",
+    id: "predictive-ml",
+    title: "Predictive Machine Learning",
+    subtitle: "Data-Driven Operations",
+    tagline: "Leverage ensemble methods like Random Forests to optimize resource allocation and anticipate system behaviors.",
+    accent: "#FFB800", // Gold/Orange
+    accentRgb: "255,184,0",
     stats: [
-      { label: "Manual Effort", value: "-85%" },
-      { label: "Operation Time", value: "24/7/365" }
+      { label: "Algorithm", value: "Ensemble ML" },
+      { label: "Feature Engineering", value: "Custom" }
     ],
     points: [
-      "AI agents that can scrape data, format reports, and email stakeholders automatically.",
-      "Intelligent code generation and automated pull-request reviews for dev teams.",
-      "Smart scheduling and resource allocation that adapts to daily operational changes."
+      "Predictive maintenance models that alert your operations team before critical hardware or infrastructure fails.",
+      "Advanced regression modeling for supply chain forecasting, inventory optimization, and price dynamics.",
+      "Rigorous, domain-specific feature engineering tailored strictly to your proprietary business metrics."
     ]
   }
 ];
@@ -404,14 +404,14 @@ export default function AISystemsServices() {
         {/* Outcome-Focused Header Section */}
         <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)", marginBottom: "clamp(40px, 8vw, 60px)" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 14px", borderRadius: 2, border: "1px solid rgba(167,139,250,0.3)", background: "rgba(167,139,250,0.05)", marginBottom: 24 }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.16em", color: "#A78BFA" }}>// AUTOMATE INTELLIGENCE · QRYPTEX</span>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.16em", color: "#A78BFA" }}>// MACHINE LEARNING & PERCEPTION · QRYPTEX</span>
           </div>
           <h1 className="hero-title" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(32px, 5vw, 58px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
-            MULTIPLY YOUR WORKFORCE. <br/>
-            <span style={{ color: "#A78BFA" }}>OPERATIONAL AI AT SCALE.</span>
+            INTELLIGENCE FROM DATA. <br/>
+            <span style={{ color: "#A78BFA" }}>ACTION IN REAL-TIME.</span>
           </h1>
-          <p className="hero-subtitle" style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "16px", lineHeight: 1.8, color: "var(--text-secondary, #A1A1C2)", maxWidth: 650 }}>
-            Transform your raw data into an autonomous engine. We move past sandboxed experiments to integrate production-ready AI, custom LLMs, and predictive models directly into your business stack to drive exponential growth.
+          <p className="hero-subtitle" style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "16px", lineHeight: 1.8, color: "var(--text-secondary, #A1A1C2)", maxWidth: 680 }}>
+            We engineer specialized Machine Learning models—from Isolation Forests for fraud detection to edge-optimized CCTV computer vision. We deploy hybrid intelligence architectures that prioritize high recall, low false positives, and absolute explainability.
           </p>
         </div>
 
@@ -443,13 +443,13 @@ export default function AISystemsServices() {
           
           <div style={{ position: "relative", zIndex: 1 }}>
             <h3 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(24px, 3vw, 32px)", fontWeight: 700, marginBottom: "16px", color: "#FFF" }}>
-              Ready to Upgrade Your Intelligence?
+              Ready to Deploy Real Machine Learning?
             </h3>
             <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "16px", color: "var(--text-secondary, #A1A1C2)", maxWidth: "600px", margin: "0 auto 30px auto", lineHeight: 1.6 }}>
-              Stop wasting human hours on tasks machines can do in seconds. Discover how operational AI can drastically reduce costs and surface new revenue.
+              Move beyond the generative hype. Partner with us to integrate robust anomaly detection, automated log analysis, and vision models that solve actual operational and security challenges.
             </p>
             <button className="cta-button" onClick={() => navigate('/contact')}>
-              REQUEST AI READINESS AUDIT
+              REQUEST ML AUDIT
             </button>
           </div>
         </div>
