@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { label: "Contact",    href: "/contact"    }, 
 ];
 
-// ── CORE SERVICES DATA (Updated Content & Reordered) ────────────────────────
+// ── CORE SERVICES DATA ──────────────────────────────────────────────────────
 const SERVICES = [
   {
     id: "fullstack",
@@ -313,7 +313,7 @@ function ServiceCard({ svc, index }) {
       onClick={() => navigate(svc.path || `/${svc.id}`)}
       style={{
         position: "relative", cursor: "pointer", borderRadius: 4,
-        border: `1px solid ${hov ? `rgba(${svc.accentRgb},0.48)` : "rgba(108,43,217,0.17)"}`,
+        border: hov ? `1px solid rgba(${svc.accentRgb},0.48)` : "1px solid rgba(108,43,217,0.17)",
         background: hov ? `linear-gradient(145deg, rgba(${svc.accentRgb},0.07) 0%, rgba(5,3,13,0.96) 55%)` : "rgba(8,5,20,0.65)",
         backdropFilter: "blur(16px)", 
         boxShadow: hov ? `0 0 0 1px rgba(${svc.accentRgb},0.12), 0 24px 60px rgba(${svc.accentRgb},0.13), 0 6px 24px rgba(0,0,0,0.5)` : "0 2px 14px rgba(0,0,0,0.3)",
@@ -322,6 +322,7 @@ function ServiceCard({ svc, index }) {
         opacity: vis ? 1 : 0,
         animation: vis ? `cardReveal 0.7s cubic-bezier(0.34,1.4,0.64,1) ${index * 0.1}s both` : "none",
         overflow: "hidden", padding: "36px 30px 30px",
+        display: "flex", flexDirection: "column" 
       }}
     >
       <CardParticles accent={svc.accent} active={hov} />
@@ -343,7 +344,7 @@ function ServiceCard({ svc, index }) {
           </li>
         ))}
       </ul>
-      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, letterSpacing: "0.1em", color: hov ? `rgba(${svc.accentRgb},0.55)` : "rgba(108,43,217,0.22)", marginBottom: 20, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{svc.stack}</div>
+      <div style={{ marginTop: "auto", fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, letterSpacing: "0.1em", color: hov ? `rgba(${svc.accentRgb},0.55)` : "rgba(108,43,217,0.22)", marginBottom: 20, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{svc.stack}</div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Rajdhani', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: hov ? svc.accent : "transparent", transition: "color 0.3s, transform 0.35s", transform: hov ? "translateX(7px)" : "translateX(0)", position: "relative", zIndex: 2 }}>
         <span>Explore Service</span>
         <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h14M10 1l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -375,7 +376,7 @@ function CustomCell() {
         marginTop: 22,
         padding: "40px 50px", 
         borderRadius: 4,
-        border: `1px dashed ${hov ? "var(--accent-green)" : "rgba(108,43,217,0.3)"}`,
+        border: hov ? "1px dashed var(--accent-green)" : "1px dashed rgba(108,43,217,0.3)",
         background: hov ? "rgba(0,255,198,0.03)" : "rgba(5,3,13,0.6)",
         backdropFilter: "blur(12px)",
         display: "flex", 
@@ -411,7 +412,7 @@ function CustomCell() {
         padding: "16px 32px", borderRadius: 4,
         background: hov ? "var(--accent-green)" : "rgba(0,255,198,0.05)",
         color: hov ? "var(--bg-deep)" : "var(--accent-green)",
-        border: `1px solid ${hov ? "transparent" : "rgba(0,255,198,0.4)"}`,
+        border: hov ? "1px solid transparent" : "1px solid rgba(0,255,198,0.4)",
         fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em",
         transition: "all 0.3s",
         whiteSpace: "nowrap"
@@ -497,7 +498,7 @@ function HighlightCard({ h, index }) {
       onMouseLeave={() => setHov(false)}
       style={{
         padding: "30px 26px", borderRadius: 4,
-        border: `1px solid ${hov ? `rgba(${h.accentRgb},0.38)` : "rgba(108,43,217,0.15)"}`,
+        border: hov ? `1px solid rgba(${h.accentRgb},0.38)` : "1px solid rgba(108,43,217,0.15)",
         background: hov ? `rgba(${h.accentRgb},0.05)` : "rgba(5,3,13,0.55)",
         boxShadow: hov ? `0 16px 44px rgba(${h.accentRgb},0.12), 0 0 0 1px rgba(${h.accentRgb},0.08)` : "none",
         transform: hov ? "translateY(-5px)" : "translateY(0)",
