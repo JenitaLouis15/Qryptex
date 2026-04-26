@@ -142,6 +142,7 @@ function HexNodes() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function Contact() {
+  const [website, setWebsite] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState({ name: "", company: "", email: "", type: "", budget: "", message: "" });
@@ -163,10 +164,44 @@ export default function Contact() {
     if (field === "message") setCharCount(val.length);
   };
 
-  const handleSubmit = () => {
-    if (!form.name || !form.email || !form.message) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setSubmitting(true);
-    setTimeout(() => { setSubmitting(false); setSubmitted(true); }, 1800);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...form,
+          website, // honeypot
+        }),
+      });
+      
+      const data = await res.json();
+
+      if (data.success) {
+        setSubmitted(true);
+        setForm({
+          name: "",
+          company: "",
+          email: "",
+          type: "",
+          budget: "",
+          message: "",
+        });
+        setCharCount(0);
+      } else {
+        alert(data.error || "Something went wrong");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to send message");
+    }
+
+    setSubmitting(false);
   };
 
   const inputStyle = (field) => ({
@@ -373,12 +408,33 @@ export default function Contact() {
 
                       <div style={{ marginBottom: 28 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                          <label style={{ ...labelStyle, marginBottom: 0, color: focused === "message" ? "#A78BFA" : "rgba(139,92,246,0.6)" }}>How can we help? *</label>
-                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, color: charCount > 500 ? "rgba(0,255,198,0.5)" : "rgba(161,161,194,0.25)", transition: "color 0.3s" }}>{charCount}/1000</span>
+                          <label style={{ ...labelStyle, marginBottom: 0, color: focused === "message" ? "#A78BFA" : "rgba(139,92,246,0.6)" }}>
+                            How can we help? *
+                          </label>
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, color: charCount > 500 ? "rgba(0,255,198,0.5)" : "rgba(161,161,194,0.25)", transition: "color 0.3s" }}>
+                            {charCount}/1000
+                          </span>
                         </div>
-                        <textarea rows={5} placeholder="Tell us about your project goals, timelines, or just drop a friendly hello..." value={form.message} maxLength={1000} onChange={e => handleChange("message", e.target.value)} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} style={{ ...inputStyle("message"), resize: "vertical", minHeight: 120, lineHeight: 1.6 }} />
-                      </div>
 
+                        <textarea
+                          rows={5}
+                          placeholder="Tell us about your project goals, timelines, or just drop a friendly hello..."
+                          value={form.message}
+                          maxLength={1000}
+                          onChange={e => handleChange("message", e.target.value)}
+                          onFocus={() => setFocused("message")}
+                          onBlur={() => setFocused(null)}
+                          style={{ ...inputStyle("message"), resize: "vertical", minHeight: 120, lineHeight: 1.6 }}
+                        />
+
+                        <input
+                          type="text"
+                          name="website"
+                          value={website}
+                          onChange={(e) => setWebsite(e.target.value)}
+                          style={{ display: "none" }}
+                        />
+                      </div>
                       <button onClick={handleSubmit} disabled={submitting || !form.name || !form.email || !form.message}
                         style={{ width: "100%", padding: "15px 0", borderRadius: 10, cursor: (submitting || !form.name || !form.email || !form.message) ? "not-allowed" : "pointer", background: (submitting || !form.name || !form.email || !form.message) ? "linear-gradient(135deg, rgba(108,43,217,0.25), rgba(76,27,160,0.2))" : "linear-gradient(135deg, #6C2BD9 0%, #4C1BA0 100%)", border: "1px solid rgba(139,92,246,0.5)", color: "#fff", fontFamily: "'Rajdhani', sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", boxShadow: (!submitting && form.name && form.email && form.message) ? "0 8px 28px rgba(108,43,217,0.4), inset 0 1px 0 rgba(255,255,255,0.15)" : "none", transition: "all 0.3s ease", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, opacity: (submitting || !form.name || !form.email || !form.message) ? 0.6 : 1 }}
                         onMouseEnter={e => { if (!submitting && form.name && form.email && form.message) { e.currentTarget.style.boxShadow = "0 14px 40px rgba(108,43,217,0.6), inset 0 1px 0 rgba(255,255,255,0.2)"; e.currentTarget.style.transform = "translateY(-2px)"; } }}
