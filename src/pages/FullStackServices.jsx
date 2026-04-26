@@ -25,7 +25,7 @@ function CyberAmbient() {
       ctx.clearRect(0, 0, W, H);
       t += 0.002;
 
-      ctx.strokeStyle = "rgba(255, 0, 200, 0.025)"; // Adjusted tint for Full Stack
+      ctx.strokeStyle = "rgba(255, 0, 200, 0.025)"; 
       ctx.lineWidth = 1;
       const step = 60;
       for(let x = 0; x < W; x += step) {
@@ -182,74 +182,74 @@ function CyberCard({ cap, index, loaded }) {
   );
 }
 
-// ── FULL STACK ENGINEERING DATA ─────────────────────────────────────────────
+// ── FULL STACK CAPABILITIES (Marketing the Portfolio) ───────────────────────
 const FULLSTACK_CAPABILITIES = [
   {
-    id: "web-apps",
-    title: "Enterprise Web Platforms",
-    subtitle: "Frictionless UX",
-    tagline: "High-conversion, ultra-fast web applications engineered for modern browsers.",
+    id: "connected-iot",
+    title: "IoT & Smart Ecosystems",
+    subtitle: "Hardware Meets Software",
+    tagline: "Multi-sided platforms that seamlessly bridge physical environments with digital interfaces.",
     accent: "#FF00C8",
     accentRgb: "255,0,200",
     stats: [
-      { label: "Load Time", value: "< 0.8s" },
-      { label: "Uptime", value: "99.99%" }
+      { label: "Architecture", value: "Multi-Node" },
+      { label: "Data Sync", value: "Real-Time" }
     ],
     points: [
-      "Micro-frontend architectures that allow concurrent team development without bottlenecks.",
-      "SEO-optimized, server-side rendered (SSR) platforms built on Next.js/React.",
-      "Real-time data synchronization using WebSockets and edge computing."
+      "Dual-sided application architectures (e.g., Customer Apps communicating instantly with Vendor/Kitchen POS).",
+      "Direct IoT hardware integration linking sensors, smart counters, and mobile devices.",
+      "Real-time state management using WebSockets and Supabase for zero-latency updates."
     ]
   },
   {
-    id: "mobile-apps",
-    title: "Native Mobile Ecosystems",
-    subtitle: "Dominant Market Presence",
-    tagline: "Seamless iOS and Android applications that command user attention and retention.",
+    id: "consumer-apps",
+    title: "High-Conversion Mobile Apps",
+    subtitle: "Consumer Experiences",
+    tagline: "Bespoke booking engines, boutique e-commerce, and native apps designed to retain users.",
     accent: "#00FFC6",
     accentRgb: "0,255,198",
     stats: [
-      { label: "Crash Rate", value: "< 0.1%" },
-      { label: "Sync Status", value: "Offline-First" }
+      { label: "UI Response", value: "< 100ms" },
+      { label: "Platform", value: "Cross-Device" }
     ],
     points: [
-      "Cross-platform parity ensuring a uniform brand experience across all devices.",
-      "Hardware-accelerated animations for a silky-smooth, premium user interface.",
-      "Deep integration with native hardware like biometric auth, cameras, and haptics."
+      "Scalable facility booking architectures (like Turf applications) with real-time slot conflict resolution.",
+      "Custom retail and boutique e-commerce platforms optimized for fast checkouts and visual appeal.",
+      "Cross-platform parity ensuring a uniform, premium brand experience on both iOS and Android."
     ]
   },
   {
-    id: "microservices",
-    title: "Distributed Microservices",
-    subtitle: "Infinite Scalability",
-    tagline: "Resilient backend architectures that scale dynamically with your user base.",
+    id: "enterprise-billing",
+    title: "ERP & Billing Software",
+    subtitle: "Financial Precision",
+    tagline: "Robust, compliant, cross-platform software that powers your daily business operations and inventory.",
     accent: "#FFB800",
     accentRgb: "255,184,0",
     stats: [
-      { label: "Throughput", value: "100k+ TPS" },
-      { label: "Architecture", value: "Event-Driven" }
+      { label: "Deployment", value: "Web & Desktop" },
+      { label: "Reliability", value: "Offline-First" }
     ],
     points: [
-      "Decoupled services that isolate failures, ensuring your app never goes down completely.",
-      "API-first design utilizing GraphQL and gRPC for blazing-fast data retrieval.",
-      "High-throughput message queues (Kafka/RabbitMQ) for asynchronous processing."
+      "Complex billing applications built with React and Electron for seamless desktop and web experiences.",
+      "Automated stock tracking, ledger management, and GST/Tax compliant invoice generation.",
+      "Secure, encrypted local databases that sync to the cloud, ensuring operations continue even without internet."
     ]
   },
   {
-    id: "cloud-ops",
-    title: "Cloud-Native Infrastructure",
-    subtitle: "Optimized Cloud Ops",
-    tagline: "Automated, auto-scaling cloud environments built on AWS, GCP, or Azure.",
+    id: "cloud-scale",
+    title: "Distributed Cloud Systems",
+    subtitle: "Infinite Scalability",
+    tagline: "Resilient backend architectures designed to handle massive traffic spikes without sweating.",
     accent: "#0099FF",
     accentRgb: "0,153,255",
     stats: [
-      { label: "Deployments", value: "Zero-Downtime" },
-      { label: "Cost Optimization", value: "~30% Saved" }
+      { label: "Throughput", value: "10k+ TPS" },
+      { label: "Architecture", value: "Event-Driven" }
     ],
     points: [
-      "Infrastructure as Code (Terraform) for reproducible and auditable environments.",
-      "Advanced CI/CD pipelines that automate testing, security scanning, and deployment.",
-      "Multi-region redundancy to guarantee availability during catastrophic regional outages."
+      "Decoupled microservices ensuring your application never experiences a total blackout during high loads.",
+      "API-first design utilizing modern query languages for blazing-fast data retrieval.",
+      "Automated deployment pipelines and serverless infrastructure on AWS/GCP to optimize operational costs."
     ]
   }
 ];
@@ -405,11 +405,11 @@ export default function FullStackServices() {
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: "0.16em", color: "#FF00C8" }}>// BUILD FOR SCALE · QRYPTEX</span>
           </div>
           <h1 className="hero-title" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(32px, 5vw, 58px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
-            TEN-YEAR ARCHITECTURE. <br/>
-            <span style={{ color: "#FF00C8" }}>NOT SIX-MONTH ROADMAPS.</span>
+            SCALABLE ARCHITECTURE. <br/>
+            <span style={{ color: "#FF00C8" }}>MARKET-READY APPS.</span>
           </h1>
-          <p className="hero-subtitle" style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "16px", lineHeight: 1.8, color: "var(--text-secondary, #A1A1C2)", maxWidth: 650 }}>
-            We engineer robust, high-performance web and mobile applications designed to handle millions of concurrent users. From heavy-lifting backend microservices to pixel-perfect front-end experiences, we own the entire stack.
+          <p className="hero-subtitle" style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "16px", lineHeight: 1.8, color: "var(--text-secondary, #A1A1C2)", maxWidth: 700 }}>
+            We don't just write code; we engineer entire digital businesses. From multi-node IoT smart ecosystems and enterprise billing software to high-conversion consumer booking apps, we own the full stack to ensure your product performs flawlessly.
           </p>
         </div>
 
@@ -444,7 +444,7 @@ export default function FullStackServices() {
               Ready to Architect Your Vision?
             </h3>
             <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: "16px", color: "var(--text-secondary, #A1A1C2)", maxWidth: "600px", margin: "0 auto 30px auto", lineHeight: 1.6 }}>
-              Stop patching legacy code. Let’s build a resilient, scalable, and beautifully designed application ecosystem from the ground up.
+              Whether you need a complex point-of-sale system, an IoT-connected web platform, or a native mobile app, let’s build an ecosystem that scales with your ambition.
             </p>
             <button className="cta-button" onClick={() => navigate('/contact')}>
               START YOUR BUILD
