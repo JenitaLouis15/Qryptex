@@ -9,34 +9,36 @@ const NAV_LINKS = [
   { label: "Contact",    href: "/contact"    }, 
 ];
 
-// ── CORE SERVICES DATA ──────────────────────────────────────────────────────
+// ── CORE SERVICES DATA (Updated Content & Reordered) ────────────────────────
 const SERVICES = [
   {
-    id: "cybersec",
-    path: "/cybersec", // Routes to actual service page
+    id: "fullstack",
+    path: "/fullstack",
     index: "01",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <path d="M18 3L5 10v10c0 7.2 5.6 13.9 13 15.5C25.4 33.9 31 27.2 31 20V10L18 3z"
-          stroke="currentColor" strokeWidth="1.3" fill="none" strokeLinejoin="round"/>
-        <path d="M12 18l4.5 4.5L24 13" stroke="#00FFC6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <rect x="4"   y="7"  width="28" height="18" rx="2" stroke="currentColor" strokeWidth="1.3"/>
+        <line x1="12" y1="29" x2="24" y2="29" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+        <line x1="18" y1="25" x2="18" y2="29" stroke="currentColor" strokeWidth="1.3"/>
+        <path d="M10 15l4-3.5L10 8"   stroke="#FF00C8" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+        <line x1="16" y1="15" x2="22" y2="15" stroke="#FF00C8" strokeWidth="1.4" strokeLinecap="round"/>
       </svg>
     ),
-    title: "Cybersecurity",
-    subtitle: "Solutions",
-    tagline: "Threat architecture designed to outpace adversaries — not just detect them.",
+    title: "Full Stack",
+    subtitle: "Engineering",
+    tagline: "Scalable enterprise architectures, connected IoT ecosystems, and market-ready consumer applications.",
     capabilities: [
-      "Zero-trust network design & implementation",
-      "Real-time threat intelligence & SIEM integration",
-      "Red team penetration testing & adversarial simulation",
+      "IoT-integrated smart ecosystems & dual-sided apps",
+      "Robust ERP, billing, and inventory management",
+      "High-conversion booking and consumer mobile apps",
     ],
-    stack: "SOC2 · ISO 27001 · NIST CSF",
-    accent: "#00FFC6",
-    accentRgb: "0,255,198",
+    stack: "React · React Native · Node · Supabase",
+    accent: "#FF00C8",
+    accentRgb: "255,0,200",
   },
   {
     id: "ai",
-    path: "/ai", // Updated link to AI service page
+    path: "/ai", 
     index: "02",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -57,41 +59,39 @@ const SERVICES = [
     ),
     title: "AI & Intelligent",
     subtitle: "Systems",
-    tagline: "Operational AI integrated into your stack — not sandboxed experiments.",
+    tagline: "Applied Machine Learning and real-time perception for fraud, security, and operations.",
     capabilities: [
-      "Custom LLM fine-tuning & RAG pipeline engineering",
-      "Anomaly detection & predictive threat modeling",
-      "AI-augmented DevOps, CI/CD & decision automation",
+      "Hybrid anomaly detection & fraud intelligence",
+      "Real-time video analytics & edge computer vision",
+      "Automated log analysis & predictive maintenance",
     ],
-    stack: "PyTorch · LangChain · Vertex · Bedrock",
+    stack: "Scikit-Learn · Isolation Forest · OpenCV",
     accent: "#A78BFA",
     accentRgb: "167,139,250",
   },
   {
-    id: "fullstack",
-    path: "/fullstack", // Updated link to Full Stack service page
+    id: "cybersec",
+    path: "/cybersec", 
     index: "03",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <rect x="4"   y="7"  width="28" height="18" rx="2" stroke="currentColor" strokeWidth="1.3"/>
-        <line x1="12" y1="29" x2="24" y2="29" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-        <line x1="18" y1="25" x2="18" y2="29" stroke="currentColor" strokeWidth="1.3"/>
-        <path d="M10 15l4-3.5L10 8"   stroke="#6C2BD9" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-        <line x1="16" y1="15" x2="22" y2="15" stroke="#6C2BD9" strokeWidth="1.4" strokeLinecap="round"/>
+        <path d="M18 3L5 10v10c0 7.2 5.6 13.9 13 15.5C25.4 33.9 31 27.2 31 20V10L18 3z"
+          stroke="currentColor" strokeWidth="1.3" fill="none" strokeLinejoin="round"/>
+        <path d="M12 18l4.5 4.5L24 13" stroke="#00FFC6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
-    title: "Full Stack",
-    subtitle: "Engineering",
-    tagline: "Systems architected for ten-year scale — not six-month roadmaps.",
+    title: "Cybersecurity",
+    subtitle: "Solutions",
+    tagline: "Threat architecture designed to outpace adversaries — not just detect them.",
     capabilities: [
-      "Distributed microservices & API-first architecture",
-      "High-throughput data pipelines & cloud-native infra",
-      "Security-integrated CI/CD, IaC & observability stacks",
+      "Zero-trust network design & implementation",
+      "Real-time threat intelligence & SIEM integration",
+      "Red team penetration testing & adversarial simulation",
     ],
-    stack: "Rust · Go · React · K8s · Terraform · AWS/GCP",
-    accent: "#6C2BD9",
-    accentRgb: "108,43,217",
-  },
+    stack: "SOC2 · ISO 27001 · NIST CSF",
+    accent: "#00FFC6",
+    accentRgb: "0,255,198",
+  }
 ];
 
 // ── HIGHLIGHTS DATA ─────────────────────────────────────────────────────────
@@ -310,13 +310,12 @@ function ServiceCard({ svc, index }) {
       ref={ref}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
-      // Updated onClick logic here
       onClick={() => navigate(svc.path || `/${svc.id}`)}
       style={{
         position: "relative", cursor: "pointer", borderRadius: 4,
         border: `1px solid ${hov ? `rgba(${svc.accentRgb},0.48)` : "rgba(108,43,217,0.17)"}`,
         background: hov ? `linear-gradient(145deg, rgba(${svc.accentRgb},0.07) 0%, rgba(5,3,13,0.96) 55%)` : "rgba(8,5,20,0.65)",
-        backdropFilter: "blur(16px)", // Enhanced glassmorphism
+        backdropFilter: "blur(16px)", 
         boxShadow: hov ? `0 0 0 1px rgba(${svc.accentRgb},0.12), 0 24px 60px rgba(${svc.accentRgb},0.13), 0 6px 24px rgba(0,0,0,0.5)` : "0 2px 14px rgba(0,0,0,0.3)",
         transform: hov ? "translateY(-7px) scale(1.012)" : "translateY(0) scale(1)",
         transition: "all 0.42s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -346,7 +345,6 @@ function ServiceCard({ svc, index }) {
       </ul>
       <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, letterSpacing: "0.1em", color: hov ? `rgba(${svc.accentRgb},0.55)` : "rgba(108,43,217,0.22)", marginBottom: 20, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{svc.stack}</div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Rajdhani', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: hov ? svc.accent : "transparent", transition: "color 0.3s, transform 0.35s", transform: hov ? "translateX(7px)" : "translateX(0)", position: "relative", zIndex: 2 }}>
-        {/* Removed 'Coming Soon' conditional text here */}
         <span>Explore Service</span>
         <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h14M10 1l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
       </div>
