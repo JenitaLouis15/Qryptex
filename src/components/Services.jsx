@@ -12,31 +12,33 @@ const NAV_LINKS = [
 // ── CORE SERVICES DATA ──────────────────────────────────────────────────────
 const SERVICES = [
   {
-    id: "cybersec",
-    path: "/cybersec", // Routes to actual service page
+    id: "fullstack",
+    path: "/fullstack",
     index: "01",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <path d="M18 3L5 10v10c0 7.2 5.6 13.9 13 15.5C25.4 33.9 31 27.2 31 20V10L18 3z"
-          stroke="currentColor" strokeWidth="1.3" fill="none" strokeLinejoin="round"/>
-        <path d="M12 18l4.5 4.5L24 13" stroke="#00FFC6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <rect x="4"   y="7"  width="28" height="18" rx="2" stroke="currentColor" strokeWidth="1.3"/>
+        <line x1="12" y1="29" x2="24" y2="29" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+        <line x1="18" y1="25" x2="18" y2="29" stroke="currentColor" strokeWidth="1.3"/>
+        <path d="M10 15l4-3.5L10 8"   stroke="#FF00C8" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+        <line x1="16" y1="15" x2="22" y2="15" stroke="#FF00C8" strokeWidth="1.4" strokeLinecap="round"/>
       </svg>
     ),
-    title: "Cybersecurity",
-    subtitle: "Solutions",
-    tagline: "Threat architecture designed to outpace adversaries — not just detect them.",
+    title: "Full Stack",
+    subtitle: "Engineering",
+    tagline: "Scalable enterprise architectures, connected IoT ecosystems, and market-ready consumer applications.",
     capabilities: [
-      "Zero-trust network design & implementation",
-      "Real-time threat intelligence & SIEM integration",
-      "Red team penetration testing & adversarial simulation",
+      "IoT-integrated smart ecosystems & dual-sided apps",
+      "Robust ERP, billing, and inventory management",
+      "High-conversion booking and consumer mobile apps",
     ],
-    stack: "SOC2 · ISO 27001 · NIST CSF",
-    accent: "#00FFC6",
-    accentRgb: "0,255,198",
+    stack: "React · React Native · Node · Supabase",
+    accent: "#FF00C8",
+    accentRgb: "255,0,200",
   },
   {
     id: "ai",
-    path: "/coming-soon", // Re-routed to coming soon
+    path: "/ai", 
     index: "02",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -57,41 +59,39 @@ const SERVICES = [
     ),
     title: "AI & Intelligent",
     subtitle: "Systems",
-    tagline: "Operational AI integrated into your stack — not sandboxed experiments.",
+    tagline: "Applied Machine Learning and real-time perception for fraud, security, and operations.",
     capabilities: [
-      "Custom LLM fine-tuning & RAG pipeline engineering",
-      "Anomaly detection & predictive threat modeling",
-      "AI-augmented DevOps, CI/CD & decision automation",
+      "Hybrid anomaly detection & fraud intelligence",
+      "Real-time video analytics & edge computer vision",
+      "Automated log analysis & predictive maintenance",
     ],
-    stack: "PyTorch · LangChain · Vertex · Bedrock",
+    stack: "Scikit-Learn · Isolation Forest · OpenCV",
     accent: "#A78BFA",
     accentRgb: "167,139,250",
   },
   {
-    id: "fullstack",
-    path: "/coming-soon", // Re-routed to coming soon
+    id: "cybersec",
+    path: "/cybersec", 
     index: "03",
     icon: (
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <rect x="4"   y="7"  width="28" height="18" rx="2" stroke="currentColor" strokeWidth="1.3"/>
-        <line x1="12" y1="29" x2="24" y2="29" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-        <line x1="18" y1="25" x2="18" y2="29" stroke="currentColor" strokeWidth="1.3"/>
-        <path d="M10 15l4-3.5L10 8"   stroke="#6C2BD9" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-        <line x1="16" y1="15" x2="22" y2="15" stroke="#6C2BD9" strokeWidth="1.4" strokeLinecap="round"/>
+        <path d="M18 3L5 10v10c0 7.2 5.6 13.9 13 15.5C25.4 33.9 31 27.2 31 20V10L18 3z"
+          stroke="currentColor" strokeWidth="1.3" fill="none" strokeLinejoin="round"/>
+        <path d="M12 18l4.5 4.5L24 13" stroke="#00FFC6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
-    title: "Full Stack",
-    subtitle: "Engineering",
-    tagline: "Systems architected for ten-year scale — not six-month roadmaps.",
+    title: "Cybersecurity",
+    subtitle: "Solutions",
+    tagline: "Threat architecture designed to outpace adversaries — not just detect them.",
     capabilities: [
-      "Distributed microservices & API-first architecture",
-      "High-throughput data pipelines & cloud-native infra",
-      "Security-integrated CI/CD, IaC & observability stacks",
+      "Zero-trust network design & implementation",
+      "Real-time threat intelligence & SIEM integration",
+      "Red team penetration testing & adversarial simulation",
     ],
-    stack: "Rust · Go · React · K8s · Terraform · AWS/GCP",
-    accent: "#6C2BD9",
-    accentRgb: "108,43,217",
-  },
+    stack: "SOC2 · ISO 27001 · NIST CSF",
+    accent: "#00FFC6",
+    accentRgb: "0,255,198",
+  }
 ];
 
 // ── HIGHLIGHTS DATA ─────────────────────────────────────────────────────────
@@ -310,26 +310,40 @@ function ServiceCard({ svc, index }) {
       ref={ref}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
-      // Updated onClick logic here
       onClick={() => navigate(svc.path || `/${svc.id}`)}
       style={{
         position: "relative", cursor: "pointer", borderRadius: 4,
-        border: `1px solid ${hov ? `rgba(${svc.accentRgb},0.48)` : "rgba(108,43,217,0.17)"}`,
+        border: hov ? `1px solid rgba(${svc.accentRgb},0.48)` : "1px solid rgba(108,43,217,0.17)",
         background: hov ? `linear-gradient(145deg, rgba(${svc.accentRgb},0.07) 0%, rgba(5,3,13,0.96) 55%)` : "rgba(8,5,20,0.65)",
-        backdropFilter: "blur(16px)", // Enhanced glassmorphism
+        backdropFilter: "blur(16px)", 
         boxShadow: hov ? `0 0 0 1px rgba(${svc.accentRgb},0.12), 0 24px 60px rgba(${svc.accentRgb},0.13), 0 6px 24px rgba(0,0,0,0.5)` : "0 2px 14px rgba(0,0,0,0.3)",
         transform: hov ? "translateY(-7px) scale(1.012)" : "translateY(0) scale(1)",
         transition: "all 0.42s cubic-bezier(0.16, 1, 0.3, 1)",
         opacity: vis ? 1 : 0,
         animation: vis ? `cardReveal 0.7s cubic-bezier(0.34,1.4,0.64,1) ${index * 0.1}s both` : "none",
         overflow: "hidden", padding: "36px 30px 30px",
+        display: "flex", flexDirection: "column" 
       }}
     >
       <CardParticles accent={svc.accent} active={hov} />
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: hov ? `linear-gradient(90deg, transparent, ${svc.accent} 50%, transparent)` : "transparent", transition: "background 0.5s", zIndex: 2 }} />
       <div style={{ position: "absolute", top: 14, right: 14, width: 7, height: 7, borderRadius: "50%", background: hov ? svc.accent : "rgba(108,43,217,0.28)", boxShadow: hov ? `0 0 12px ${svc.accent}, 0 0 24px rgba(${svc.accentRgb},0.3)` : "none", transition: "all 0.4s", zIndex: 2 }} />
       <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: "0.2em", color: hov ? `rgba(${svc.accentRgb},0.65)` : "rgba(108,43,217,0.28)", marginBottom: 22, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{`// ${svc.index} — SYS.ONLINE`}</div>
-      <div style={{ color: hov ? svc.accent : "rgba(161,161,194,0.55)", marginBottom: 20, display: "inline-block", transition: "color 0.35s, transform 0.45s cubic-bezier(0.34,1.4,0.64,1), filter 0.35s", transform: hov ? "scale(1.18) rotate(-4deg)" : "scale(1) rotate(0deg)", filter: hov ? `drop-shadow(0 0 10px rgba(${svc.accentRgb},0.7))` : "none", position: "relative", zIndex: 2 }}>{svc.icon}</div>
+      
+      {/* SMOOTHED ICON ANIMATION */}
+      <div style={{ 
+        color: hov ? svc.accent : "rgba(161,161,194,0.55)", 
+        marginBottom: 20, 
+        display: "inline-block", 
+        transition: "color 0.4s ease, transform 0.4s ease, filter 0.4s ease", 
+        transform: hov ? "scale(1.05) translateY(-3px)" : "scale(1) translateY(0)", 
+        filter: hov ? `drop-shadow(0 0 10px rgba(${svc.accentRgb},0.6))` : "none", 
+        position: "relative", 
+        zIndex: 2 
+      }}>
+        {svc.icon}
+      </div>
+
       <div style={{ marginBottom: 14, position: "relative", zIndex: 2 }}>
         <h3 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(14px,1.35vw,17px)", fontWeight: 900, color: "var(--text-primary)", letterSpacing: "0.04em", lineHeight: 1.1, margin: "0 0 3px" }}>{svc.title}</h3>
         <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(11px,1vw,13px)", fontWeight: 400, color: hov ? svc.accent : "var(--text-secondary)", letterSpacing: "0.09em", transition: "color 0.3s" }}>{svc.subtitle}</span>
@@ -344,9 +358,9 @@ function ServiceCard({ svc, index }) {
           </li>
         ))}
       </ul>
-      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, letterSpacing: "0.1em", color: hov ? `rgba(${svc.accentRgb},0.55)` : "rgba(108,43,217,0.22)", marginBottom: 20, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{svc.stack}</div>
+      <div style={{ marginTop: "auto", fontFamily: "'JetBrains Mono', monospace", fontSize: 8.5, letterSpacing: "0.1em", color: hov ? `rgba(${svc.accentRgb},0.55)` : "rgba(108,43,217,0.22)", marginBottom: 20, transition: "color 0.3s", position: "relative", zIndex: 2 }}>{svc.stack}</div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "'Rajdhani', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: hov ? svc.accent : "transparent", transition: "color 0.3s, transform 0.35s", transform: hov ? "translateX(7px)" : "translateX(0)", position: "relative", zIndex: 2 }}>
-        <span>{svc.id === 'cybersec' ? 'Explore Service' : 'Coming Soon'}</span>
+        <span>Explore Service</span>
         <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h14M10 1l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
       </div>
     </div>
@@ -376,7 +390,7 @@ function CustomCell() {
         marginTop: 22,
         padding: "40px 50px", 
         borderRadius: 4,
-        border: `1px dashed ${hov ? "var(--accent-green)" : "rgba(108,43,217,0.3)"}`,
+        border: hov ? "1px dashed var(--accent-green)" : "1px dashed rgba(108,43,217,0.3)",
         background: hov ? "rgba(0,255,198,0.03)" : "rgba(5,3,13,0.6)",
         backdropFilter: "blur(12px)",
         display: "flex", 
@@ -412,7 +426,7 @@ function CustomCell() {
         padding: "16px 32px", borderRadius: 4,
         background: hov ? "var(--accent-green)" : "rgba(0,255,198,0.05)",
         color: hov ? "var(--bg-deep)" : "var(--accent-green)",
-        border: `1px solid ${hov ? "transparent" : "rgba(0,255,198,0.4)"}`,
+        border: hov ? "1px solid transparent" : "1px solid rgba(0,255,198,0.4)",
         fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em",
         transition: "all 0.3s",
         whiteSpace: "nowrap"
@@ -498,7 +512,7 @@ function HighlightCard({ h, index }) {
       onMouseLeave={() => setHov(false)}
       style={{
         padding: "30px 26px", borderRadius: 4,
-        border: `1px solid ${hov ? `rgba(${h.accentRgb},0.38)` : "rgba(108,43,217,0.15)"}`,
+        border: hov ? `1px solid rgba(${h.accentRgb},0.38)` : "1px solid rgba(108,43,217,0.15)",
         background: hov ? `rgba(${h.accentRgb},0.05)` : "rgba(5,3,13,0.55)",
         boxShadow: hov ? `0 16px 44px rgba(${h.accentRgb},0.12), 0 0 0 1px rgba(${h.accentRgb},0.08)` : "none",
         transform: hov ? "translateY(-5px)" : "translateY(0)",

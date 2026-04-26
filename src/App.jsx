@@ -1,15 +1,21 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+
+// Components
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
 import About from "./components/About";
 import Contact from "./components/Contact";
+
+// Service Pages
 import Cybersec from "./pages/Cybersec";
+import FullStackServices from "./pages/FullStackServices"; // <-- NEW IMPORT
+import AISystemsServices from "./pages/AISystemsServices"; // <-- NEW IMPORT
+
+// Legal & Utility Pages
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
-
-// IMPORT THE COMING SOON PAGE HERE
 import ComingSoon from "./pages/ComingSoon"; 
 
 function LandingPage() {
@@ -47,9 +53,13 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/cybersec" element={<Cybersec />} />
           
-          {/* ADD THE COMING SOON ROUTE HERE */}
+          {/* Service Routes */}
+          <Route path="/cybersec" element={<Cybersec />} />
+          <Route path="/fullstack" element={<FullStackServices />} /> {/* <-- NEW ROUTE */}
+          <Route path="/ai" element={<AISystemsServices />} />        {/* <-- NEW ROUTE */}
+          
+          {/* Utility Routes */}
           <Route path="/coming-soon" element={<ComingSoon />} />
           
           {/* Legal Routes */}
