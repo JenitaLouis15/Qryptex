@@ -1,0 +1,3 @@
+Contact: mailto: contact@qryptex.in
+Preferred-Languages: en
+Canonical: https://qryptex.in/.well-known/security.txt
